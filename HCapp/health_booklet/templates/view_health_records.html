@@ -1,0 +1,80 @@
+{% extends 'health/base.html' %}
+{% block content %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+    <style>
+        tr:hover {
+            background-color: #cdc8c8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container shadow min-vh-100 py-2">
+        <div class="table-responsive">
+            {% if health_records %}
+            <table class="table accordion">
+                <thead class="table-primary">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Doctor</th>
+                        <th scope="col">Visit Time</th>
+                        <th scope="col">Date of Appointment</th>
+                        <th scope="col">Disease</th>
+                    </tr>
+                </thead>
+                <tbody> 
+                    {% for health_record in health_records %}
+                    <tr data-bs-toggle="collapse" data-bs-target="#r1" class="accordion-toggle">
+                        <th scope="row">{{forloop.counter}} <i class="bi bi-chevron-down"></i></th>
+                        <td><strong>{{health_record.doctor.Doctor_Name}}</strong></td>
+                        <td>{{health_record.time}}</td>
+                        <td>{{health_record.date}}</td>
+                        <td>{{health_record.disease}}</td>
+                    </tr>
+                    
+                    <tr class="collapse accordion-collapse" id="r1" data-bs-parent=".table">
+                        <td colspan="5">
+                            <div>
+                                <strong>Symptoms :</strong>
+                                <p name="symptoms">
+                                {{health_record.symptoms}}
+                                </p>
+
+                                <strong>Prescription :</strong>
+                                <p name="prescription">
+                                {{health_record.prescription}}
+                                </p>
+
+                                <strong>Additional Notes :</strong>
+                                <br>
+                                <p name="note">
+                                {{health_record.comments}}
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+                    {%endfor%}
+                </tbody>
+            </table>
+            {% else %}
+                <p>No health records found</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
+{%endblock%}

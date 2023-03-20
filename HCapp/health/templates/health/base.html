@@ -1,0 +1,170 @@
+{%load static%}
+<head>
+    <title>Health++</title> 
+    <link rel="icon" href="{% static 'health/images/favicon.ico'%}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <style>
+        .header{
+            width: 100%;
+            height: 20mm;
+            background-color: #235098;
+        }
+        #image {
+            float: left;
+        }
+        #usersign{ 
+            float: right;
+            background-color:rgb(57, 116, 183);
+            background-repeat: no-repeat;
+            margin-top:5mm;
+            border-radius: 2mm;
+            margin-right: 10mm;
+            font-weight: bold;
+            width: 9em;
+            height: 10mm;
+        }
+            /*nav-bar*/
+        .navbar .navbar-nav .nav-item .nav-link {
+            color: white;
+        }
+        .navbar .navbar-nav .nav-item .nav-link:hover {
+            color: red;
+        }
+    </style>
+</head>
+{%if user.is_authenticated%}
+<body>
+    <div>
+        <div class="header">
+            <a href="{% url 'home'%}">
+                <img
+                    class="mt-2 mx-3"
+                    id="image"
+                    src="{% static 'health/images/logo.png'%}"
+                    style='width: 60px; height: 60px;'
+                    alt="App logo"
+                />
+            </a>
+            <a id="usersign" href="{% url 'logoutUser' %}" class="btn btn-primary">
+                <img
+                    id="image"
+                    src="{% static 'health/images/common/user_logo.png'%}"
+                    style='width: 30px; height: 30px;'
+                    alt="user icon"
+                />
+                <div class="text-white">Logout</div>
+            </a>
+        </div>
+    </div>
+    
+    <div>
+        <nav class="navbar navbar-expand-sm bg-primary" style="padding: 0;">
+            <div class="container-fluid">
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="true"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon "></span>
+                </button>
+                <div
+                    class="navbar-collapse collapse show"
+                    id="navbarSupportedContent"
+                >
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="{% url 'home'%}">
+                                Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/ambulance">
+                                Ambulance
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            {% if user.account.Role == 'DUGC'%}
+                            <a class="nav-link" href="{% url 'ViewApplications' %}">
+                                Leave Application
+                            </a>
+                            {% else%}
+                            <a class="nav-link" href="{% url 'leave' %}">
+                                Leave Application
+                            </a>
+                            {%endif%}
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blood_donate">
+                                Request Blood
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'book_appointment'%}">
+                                Appointment
+                            </a>
+                        </li>
+                        {% if user.account.Role == 'Student' or user.account.Role == 'Receptionist'%}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'health_records'%}">
+                                Heath Records
+                            </a>
+                        </li>
+                        {% elif user.account.Role == 'Student' or user.account.Role == 'Doctor'%}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'home_health_record'%}">
+                                Heath Records
+                            </a>
+                        </li>
+                        {% endif%}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+{% else %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand my-0" href="/">
+                <img src="{% static 'health/images/logo.png'%}" alt="Menu" width="45" height="45" class="d-inline-block align-text-top m-0" />
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#AboutUs">About Us</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link" href="{% url 'registerUser' %}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'loginUser' %}">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>      
+    {% endif %}
+    {%for message in messages%}
+    <div id="alert-messages" class="alert alert-success alert-dismissible fade show my-0">
+        {{message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {%endfor%}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+<!-- <a href="{% url 'home'%}">
+    Home
+</a><br> -->
+
+{%block content%}
+
+{%endblock%}

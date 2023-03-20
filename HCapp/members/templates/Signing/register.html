@@ -1,0 +1,243 @@
+{% extends 'health/base.html' %}
+{% load static %}
+{% block content %}
+<html>
+    <head>
+        <title>Health++</title> 
+        <link rel="icon" href="./images/favicon.ico">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="m-5">
+            <h3 style='color: blue;'>Register as Student/Faculty</h3>
+            <form action="{% url 'registerUser' %}" method="POST" class="row g-3 needs-validation" novalidate>
+                {% csrf_token %}
+                <div class="col-md-4">
+                    <label htmlFor="validationCustom01" class="form-label">
+                        First name
+                    </label>
+                    <input
+                    type="text"
+                    class="form-control"
+                    id="name_inp"
+                    name="First_name"
+                    required
+                    onchange="verifyfn()"
+                    ></input>
+                    <div class="invalid-feedback">Please enter a valid first name!</div>
+                </div>
+                <div class="col-md-4">
+                    <label htmlFor="validationCustom02" class="form-label">
+                        Last name
+                    </label>
+                    <input
+                    type="text"
+                    class="form-control"
+                    id="validationCustom02"
+                    name="Last_name"
+                    required
+                    ></input>
+                    <div class="invalid-feedback">Please enter a valid last name!</div>
+                </div>
+                <div class="col-md-4">
+                    <label htmlFor="validationCustom03" class="form-label">
+                        Gender
+                    </label>
+                    <select name="Gender" class="form-select" id="validationCustom03" required>
+                        <option selected disabled value="">
+                            Choose...
+                        </option>
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
+                    <div class="invalid-feedback">Gender is not selected.</div>
+                </div>
+                <div class="col-md-6">
+                    <label htmlFor="validationCustom04" class="form-label">
+                        Date of Birth
+                    </label>
+                    <input
+                    type="date"
+                    class="form-control"
+                    id="validationCustom04"
+                    name="DOB"
+                    required
+                    ></input>
+                    <div class="invalid-feedback">Please choose a valid birth date!</div>
+                </div>
+                <div class="col-md-6">
+                    <label htmlFor="validationCustom05" class="form-label">
+                        Username
+                    </label>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" id="inputGroupPrepend">@</span>
+                        <input
+                        type="text"
+                        class="form-control"
+                        id="choose_username"
+                        aria-describedby="inputGroupPrepend"
+                        name="Username"
+                        onchange="verifyUsername()"
+                        required
+                        ></input>
+                        <div class="invalid-feedback" id="inval_un">Username already exists.</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label htmlFor="validationCustom06" class="form-label">
+                        Password
+                    </label>
+                    <input
+                    type="password"
+                    class="form-control"
+                    id="p_inp"
+                    name="Password"
+                    required
+                    ></input>
+                    <div class="invalid-feedback">
+                        Please provide a strong Password.
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label htmlFor="validationCustom07" class="form-label was-validated">
+                        Confirm Password
+                    </label>
+                    <input
+                    type="password"
+                    class="form-control"
+                    id="cnfp_inp"
+                    required
+                    ></input>
+                    <div class="invalid-feedback" id="pmatch">Password does not match.</div>
+                </div>
+                <div class="col-md-4">
+                    <label htmlFor="validationCustom08" class="form-label">
+                        CC Id
+                    </label>
+                    <input
+                    type="text"
+                    class="form-control"
+                    id="validationCustom08"
+                    name="CCID"
+                    required
+                    ></input>
+                    <div class="invalid-feedback">Please provide your CC Id.</div>
+                </div>
+                <div class="col-md-4">
+                    <label htmlFor="validationCustom09" class="form-label">
+                        Contact info
+                    </label>
+                    <input
+                    type="text"
+                    class="form-control"
+                    id="validationCustom09"
+                    pattern="[0-9]{10}"
+                    name="Contact"
+                    required
+                    ></input>
+                    <div class="invalid-feedback">
+                        Please provide your contact number.
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <label htmlFor="validationCustom03" class="form-label">
+                        Blood Group
+                    </label>
+                    <select name="BloodG" class="form-select" id="validationCustom03" required>
+                        <option selected disabled value="">
+                            Choose...
+                        </option>
+                        <option>A+</option>
+                        <option>B+</option>
+                        <option>O+</option>
+                        <option>AB+</option>
+                        <option>A-</option>
+                        <option>B-</option>
+                        <option>O-</option>
+                        <option>AB-</option>
+                    </select>
+                    <div class="invalid-feedback">Please select your blood group</div>
+                </div>
+                <div class="col-md-4">
+                    <label htmlFor="validationCustom11" class="form-label">
+                        Email
+                    </label>
+                    <input
+                    type="email"
+                    class="form-control"
+                    id="validationCustom11"
+                    name="Email"
+                    required
+                    ></input>
+                    <div class="invalid-feedback">Please provide a valid Email.</div>
+                </div>
+                <div class="col-7">
+                    <button
+                        class="btn btn-primary"
+                        style='float: right;'
+                        type="submit"
+                        value="Register"
+                        id="submit_form"
+                        >
+                        Create Account
+                    </button>
+                </div>
+                <div class="pt-4 text-center">
+                    <b> Already a User? </b><a href="loginUser" style='color: red;'> <b> Sign in </b></a>
+                </div>
+            </form>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+        <script>
+            var Usernames = JSON.parse("{{Usernames|escapejs}}");
+            let unInp = document.getElementById("choose_username");
+            function password_validate(){
+                let answer = true;
+                if (document.getElementById("cnfp_inp").value != document.getElementById("p_inp").value){
+                    document.getElementById("cnfp_inp").setCustomValidity("Wrong");
+                    answer = false;
+                }else{
+                    document.getElementById("cnfp_inp").setCustomValidity("");
+                }
+                return answer;
+            }
+            
+            function username_validate(){
+                let answer = true;
+                if (Usernames.includes(unInp.value)){
+                    document.getElementById("choose_username").setCustomValidity("Wrong");
+                    answer = false;
+                }else{
+                    document.getElementById("choose_username").setCustomValidity("");
+                }
+                return answer;
+            }
+            
+            function custom_validation(){
+                return password_validate() && username_validate();
+            }
+            document.getElementById("cnfp_inp").addEventListener("input", password_validate);
+            unInp.addEventListener("input", username_validate);
+
+            (function () {
+                'use strict'
+                var forms = document.querySelectorAll('.needs-validation')
+                
+                Array.prototype.slice.call(forms)
+                    .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!custom_validation() || !form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                    })
+            })();
+            const nameInput = document.querySelector("#cnfp_inp");
+            const form = document.querySelector("form");
+
+        </script>
+    </body>
+</html>
+{% endblock %}

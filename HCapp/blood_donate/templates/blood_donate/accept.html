@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Health++</title>
+</head>
+<body>
+    <h1>You Sure?</h1>
+    <form action={% url 'confirm' %} method="post">
+        {% csrf_token %}
+        <input type="hidden" name="id" value={{receiver_id}}>
+        <input type="submit" name="status" value="Yes">
+        <input type="submit" name="status" value="No">
+    </form>
+</body> 
+</html>

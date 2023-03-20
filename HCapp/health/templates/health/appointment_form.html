@@ -1,0 +1,311 @@
+{% extends 'health/base.html' %}
+{%load static%}
+{%block content%}
+<html>
+    <head>
+        <title>Health++</title> 
+        <link rel="icon" href="{%static 'health/images/favicon.ico'%}">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <style>
+            .appointmentList{
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+            .View{
+                color: blue;
+                font-weight: 500;
+                border: none;
+                background: none;
+            }
+            .View:hover{
+                color: red;
+            }
+            .status{
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+            .i{
+                margin: 5px;
+                width: 80px;
+                height: 80px;
+            }
+            .c{
+                background-color: #d7dae0;
+                border-radius: 20px;
+            margin: 20px;
+            }
+            .Visits{
+                font-size: large;
+                margin-top: 10px;  
+                margin-left: 110px;
+                margin-right: 20px;
+                margin-bottom: 0%;
+            }
+            .Visit_number{
+                margin-top: 10px;
+                margin-left: 150px;
+                font-weight: bold;
+                font-size: large;
+                color: black;
+            }
+            td ,th{
+                white-space : nowrap;
+                overflow: hidden;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class="appointmentList">
+            <h1 style='text-align: center;'>Appointment List</h1>
+            <div class="row status" >
+                <div class="c col-md-3 col-sm-8 border">
+                    <img class="i" src="{%static 'health/images/appointment/waiting.png'%}" alt="" style='float: left;'></img>
+                    <p class="Visits" style='color: blue;'>Awaiting Visits</p>
+                    <p class="Visit_number">{{count}}</p>
+                </div>
+                <div class="c col-md-4 col-sm-8 border">
+                    <img class="i" src="{%static 'health/images/appointment/cancelled.png'%}" alt="" style='float: left;'></img>
+                    <p class="Visits" style='color: red;'>Cancelled Visits</p>
+                    <p class="Visit_number">0</p>
+                </div>
+                <div class="c col-md-3 col-sm-8 border">
+                    <img class="i" src="{%static 'health/images/appointment/done.png'%}" alt="" style='float: left;'></img>
+                    <p class="Visits" style='color:green;'>Completed Visits</p>
+                    <p class="Visit_number">0</p>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-primary">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Visit time</th>
+                            {% if user.account.Role == 'Doctor'%}
+                            <th scope="col">Gender</th>
+                            {% endif%}
+                            {% if user.account.Role == 'Student' %}
+                            <th scope="col">Department </th>
+                            {% endif %}
+
+                            {% if user.account.Role == 'Doctor'%}
+                            <th scope="col">View Details</th>
+                            {% endif%}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%if user.account.Role == 'Doctor'%}
+                        {% for appointment in appointments %}
+                        <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td style='color: blue;'>{{appointment.patient.Patient_Name}}</td>
+                            <td>{{appointment.timeSlot.date}}</td>            
+                            <td>{{appointment.timeSlot.starttime}}:00</td>
+                            <td>{{appointment.patient.user.Gender}}</td>
+                            <th> <button class="View"><a href="{%url 'home_health_record' %}" class="btn btn-primary"> Create </a></button></th>
+                        </tr>
+                        {%endfor%}
+                        {%else%}
+                            {% for appointment in appointments %}
+                        <tr>
+
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td style='color: blue;'>{{appointment.doctor.Doctor_Name}}</td>
+                            <td>{{appointment.timeSlot.date}}</td>
+                            <td>{{appointment.timeSlot.starttime}}:00</td>
+                            <td>{{appointment.doctor.Department}}</td>
+                        </tr>
+                            {%endfor%}
+                        
+                        {%endif%}
+                        <!-- {{appointment.patient.user.Gender}} -->
+                        <!-- <tr>
+                            <th scope="row"></th>
+                            <td style='color: blue;'>Angelina Bishop</td>
+                            <td>3:15pm</td>
+                            <td>Female</td>
+                            <td>21</td>
+                            <td>Cold/Flu</td>
+                            <th> <button class="View">  View Details </button> </th>
+                        </tr> -->
+                        </tr> 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="mt-5 mx-5">
+            <h3>Schedule New Appointment</h3>
+            
+            <form method="get" action={% url 'submitdate' %} class="row g-3 needs-validation" novalidate>
+                <label htmlFor="validationCustom04" class="form-label">Preferred Appointment Date*</label>
+                <div class="row">
+                    <div class="col-md-6"><input name="date" type="date" class="form-control" id="validationCustom04" required></input></div>                    
+                    <div class="col-md-3">
+                        <button onsubmit='submit()' class="btn btn-secondary" style='float: right;' type="submit">Submit Date</button>
+                    </div>                    
+                    <div class="valid-feedback">
+                        Looks good!
+                    </div>
+                </div>
+            </form>
+            
+            {%if submit%}
+            <form method="get" action={%url 'submitfinal'%} class="row g-3 needs-validation" novalidate>
+                {% csrf_token %}
+                <div class="col-sm-8 col-lg-6" >
+
+                    <label htmlFor="validation01" class="form-label">Which department would you like to get an appointment from ?*</label>
+                    <select name = "department" class="form-select" id="DocDept" required onchange="deptUpdate()">
+                        <option selected disabled value="">Please select...</option>
+                        <option>Department1</option>
+                        <option>Department2</option>
+                        <option>Other</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        please select a department.
+                    </div>
+                </div>
+                <div class="col-sm-8 col-lg-6">
+                    <label htmlFor="validation03" class="form-label">Doctor*</label>
+                    <select name="preferreddoc" class="form-select" id="DocName" required onchange="nameUpdate()">
+                        <option selected disabled value="">Please select...</option>
+                        <option>Doctor1</option>
+                        <option>Doctor2</option>
+                        <option>Other</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Doctor is not selected.
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label htmlFor="validationCustom03" class="form-label">Time Slot*</label>
+                    <select name='timeslot' class="form-select" id="SlotTime" required onchange="slotUpdate()">
+                        <option selected disabled value="">Select slot...</option>
+                        <option>10:00-11:00</option>
+                        <option>11:00-12:00</option>
+                        <option>12:00-13:00</option>
+                        <option>13:00-14:00</option>
+                        <option>14:00-15:00</option>
+                        <option>15:00-16:00</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        please select a slot.
+                    </div>
+                </div>
+                <div class="col-7">
+                    <button onclick="submit()" name="date1" value={{date}} class="btn btn-primary" style='float: right;' type="submit">Book Appointment</button>
+                </div>
+            </form>
+            {%endif%}
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+        <script>
+           var docData = JSON.parse("{{docData|escapejs}}");
+            // var docData = [
+            //     {"name":"Dr. Ortho", "dept":"Ortho", "slots":["10:00-11:00", "11:00-12:00", "16:00-17:00"]},
+            //     {"name":"Dr. ABC", "dept":"Medicine", "slots":["11:00-12:00", "14:00-15:00", "16:00-17:00"]},
+            //     {"name":"Dr. Hello", "dept":"Ortho", "slots":["10:00-11:00", "11:00-12:00", "15:00-16:00"]},
+            //     {"name":"Dr. Hi", "dept":"Dental", "slots":["10:00-11:00", "11:00-12:00", "16:00-17:00"]},
+            //     {"name":"Dr. yay", "dept":"Dental", "slots":["10:00-11:00", "11:00-12:00", "16:00-17:00"]},
+            //     {"name":"Dr. Hurray", "dept":"Dental", "slots":["10:00-11:00", "11:00-12:00", "16:00-17:00"]},
+            // ];
+            const allSlots = ["10:00-11:00", "11:00-12:00", "16:00-17:00"];
+            let nameDrop = document.getElementById("DocName");
+            let deptDrop = document.getElementById("DocDept");
+            let slotDrop = document.getElementById("SlotTime");
+            let nstr = '<option selected disabled value="">Please select...</option>';
+            let dstr = '<option selected disabled value="">Please select...</option>';
+            let sstr = '<option selected disabled value="">Please select...</option>';
+            let deptList = [];
+            let slotList = [];
+            docData.forEach((doc)=>{
+                nstr += '<option>' + doc.name + '</option>';
+                if (!deptList.includes(doc.dept)){
+                    deptList.push(doc.dept);
+                    dstr += '<option>' + doc.dept + '</option>';
+                }
+                doc.slots.forEach((slot)=>{
+                    if (!slotList.includes(slot)){
+                        slotList.push(slot);
+                    }
+                });
+            });
+            slotList.sort();
+            slotList.forEach((slot)=>{
+                sstr += '<option>' + slot + '</option>';
+            });
+            // allSlots.forEach((slot)=>{
+            //     sstr += '<option>' + slot + '</option>';
+            // });
+            nameDrop.innerHTML = nstr;
+            deptDrop.innerHTML = dstr;
+            slotDrop.innerHTML = sstr;
+            function deptUpdate(){
+                nstr = '<option selected disabled value="">Please select...</option>';
+                sstr = '<option selected disabled value="">Please select...</option>';
+                slotList = [];
+                let rdept = deptDrop.value;
+                docData.forEach((doc)=>{
+                    if(doc.dept == rdept){
+                        nstr += '<option>' + doc.name + '</option>';
+                        doc.slots.forEach((slot)=>{
+                            if (!slotList.includes(slot)){
+                                slotList.push(slot);
+                            }
+                        });
+                    }
+                });
+                slotList.sort();
+                slotList.forEach((slot)=>{
+                    sstr += '<option>' + slot + '</option>';
+                });
+                nameDrop.innerHTML = nstr;
+                slotDrop.innerHTML = sstr;
+            }
+            function nameUpdate(){
+                let rname = nameDrop.value;
+                let rdoc = docData.find((doc)=>{
+                    if (doc.name == rname){
+                        return true;
+                    }
+                });
+                sstr = '<option selected disabled value="">Please select...</option>';
+                rdoc.slots.forEach((slot)=>{
+                    sstr += '<option>' + slot + '</option>';
+                });
+                deptDrop.value = rdoc.dept;
+                slotDrop.innerHTML = sstr;
+            }
+            function slotUpdate(){
+                let rslot = slotDrop.value;
+                let cname = nameDrop.value;
+                nstr = '<option selected disabled value="">Please select...</option>';
+                docData.forEach((doc)=>{
+                    if (doc.slots.includes(rslot)){
+                        nstr += '<option>' + doc.name + '</option>';
+                    }
+                });
+                nameDrop.innerHTML = nstr;
+                if (cname != ""){
+                    nameDrop.value = cname;
+                }
+            }
+        </script>
+<!-- <h1>
+    Appointment form
+</h1>
+
+<form action="" method='POST'>
+    {%csrf_token%}
+
+    {{form.as_p}}
+
+    <input type ='submit',value='Book' class="btn btn-secondary">
+
+</form> -->
+    </body>
+    <html>
+{%endblock%}
