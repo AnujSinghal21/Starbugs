@@ -13,7 +13,7 @@ import datetime
 
 def home(request):
     # return render(request,'health/home.html',{'appointments':appointments})
-    return render(request,'health/home.html')
+    return render(request,'health/Home.html')
         
 def getappointments(request):
     user=Account.objects.get(user=request.user)
