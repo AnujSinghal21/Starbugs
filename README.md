@@ -12,7 +12,7 @@ This is the repository containing all the sourcecodes for Health++, the Health C
 git clone  git@github.com:atulyasndrm/CS253_StarBugs.git
 ```
 
-### Installing the required files
+### Installing the dependencies
 
 - In the required directory clone the repository
 
