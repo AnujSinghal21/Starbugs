@@ -14,7 +14,7 @@ git clone  git@github.com:atulyasndrm/CS253_StarBugs.git
 
 ### Installing the dependencies
 
-- In the required directory clone the repository
+- After cloning, 
 
 ```
 cd Health++
