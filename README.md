@@ -11,7 +11,7 @@ python -m pip install -r requirements.txt
 
 ### Cloning the Repository
 
--Clone the following repository in a directory 
+- Clone the following repository in a directory 
 
 ```
 git clone  git@github.com:atulyasndrm/CS253_StarBugs.git
