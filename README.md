@@ -3,11 +3,6 @@ This is the repository containing all the sourcecodes for Health++, the Health C
 ---
 ## Launching the Website
 
-### Dependencies
-
-```
-python -m pip install -r requirements.txt
-```
 
 ### Cloning the Repository
 
