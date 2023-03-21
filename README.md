@@ -10,6 +10,9 @@ python -m pip install -r requirements.txt
 ```
 
 ### Cloning the Repository
+
+-Clone the following repository in a directory 
+
 ```
 git clone  git@github.com:atulyasndrm/CS253_StarBugs.git
 ```
@@ -17,6 +20,7 @@ git clone  git@github.com:atulyasndrm/CS253_StarBugs.git
 ### Installing the required files
 
 - In the required directory clone the repository
+
 ```
 cd Health++
 chmod +x install.sh
@@ -25,7 +29,7 @@ chmod +x install.sh
 
 ### Launching the Website
 
-Run the ```launch.sh``` bash srcipt. 
+- Run the ```launch.sh``` bash srcipt. 
 ```
 .\launch.sh
 ```
