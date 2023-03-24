@@ -19,14 +19,14 @@ git clone  git@github.com:atulyasndrm/CS253_StarBugs.git
 ```
 cd Health++
 chmod +x install.sh
-.\install.sh
+./install.sh
 ```
 
 ### Launching the Website
 
 - Run the ```launch.sh``` bash srcipt. 
 ```
-.\launch.sh
+./launch.sh
 ```
 
 - Now type the following URL in your preffered web browser

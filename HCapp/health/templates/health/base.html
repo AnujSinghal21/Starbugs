@@ -110,13 +110,13 @@
                         {% if user.account.Role == 'Student' or user.account.Role == 'Receptionist'%}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'health_records'%}">
-                                Heath Records
+                                Health Records
                             </a>
                         </li>
                         {% elif user.account.Role == 'Student' or user.account.Role == 'Doctor'%}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'home_health_record'%}">
-                                Heath Records
+                                Health Records
                             </a>
                         </li>
                         {% endif%}
