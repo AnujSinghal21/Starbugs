@@ -17,7 +17,7 @@ git clone  git@github.com:atulyasndrm/CS253_StarBugs.git
 - After cloning, 
 
 ```
-cd Health++
+cd Starbugs
 chmod +x install.sh
 ./install.sh
 ```
