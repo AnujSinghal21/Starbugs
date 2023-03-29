@@ -13,14 +13,15 @@ from django.contrib.auth.models import User
 #         # return redirect('add_health_record') 
 #     # else: 
 #         return render(request,'health_records')
-
+@login_required
 def home_health_record(request):
     return render(request,'create_health_record.html',{"submit":0})
 
+@login_required
 def add_health_record(request):
     return render(request,'create_health_record.html',{"submit":1})
 
-
+@login_required
 def create_health_record(request):
     if request.method == 'POST':
         # form = HealthRecordForm(request.POST)
@@ -43,7 +44,7 @@ def create_health_record(request):
     return render(request, 'create_health_record.html',)
 
 
-#@login_required
+@login_required
 def view_health_records(request):
     a = request.user
     account = Account.objects.get(user=a).Role

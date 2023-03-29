@@ -9,25 +9,11 @@ from members.models import Account
 from json import dumps
 from django.urls import reverse
 import datetime
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 
-def home(request):
-    # return render(request,'health/home.html',{'appointments':appointments})
-    return render(request,'health/Home.html')
-        
-def getappointments(request):
-    user=Account.objects.get(user=request.user)
-    if(user.Role=="Doctor"):
-        doctor = Doctor.objects.get(user = user)
-        appointments = Appointment.objects.filter(doctor = doctor,status = True)
-    else:
-        patient = Patient.objects.get(user = user)
-        appointments = Appointment.objects.filter(patient = patient,status = True)
-
-    return appointments
-
-
-def book_appointment(request):    
+def assign_roles():
     users = Account.objects.all()
     for user in users:
         if(user.Role == "Student"):
@@ -49,7 +35,30 @@ def book_appointment(request):
                 name = user.user.first_name + " " + user.user.last_name
                 new_patient = Patient(user = user, Patient_Name = name)  
                 new_patient.save()
+    return 
 
+
+
+def home(request):
+    assign_roles()
+    # return render(request,'health/home.html',{'appointments':appointments})
+    return render(request,'health/Home.html')
+
+@login_required
+def getappointments(request):
+    user=Account.objects.get(user=request.user)
+    if(user.Role=="Doctor"):
+        doctor = Doctor.objects.get(user = user)
+        appointments = Appointment.objects.filter(doctor = doctor,status = True)
+    else:
+        patient = Patient.objects.get(user = user)
+        appointments = Appointment.objects.filter(patient = patient,status = True)
+
+    return appointments
+
+@login_required
+def book_appointment(request):    
+    assign_roles()
     appointments = getappointments(request)
 
     
@@ -67,7 +76,7 @@ def book_appointment(request):
     
     return render(request,'health/appointment_form.html',{'submit':0,"appointments":appointments,"count":appointments.count()})
 
-
+@login_required
 def submitdate(request):
     if(request.method=="GET"):
         date=request.GET["date"]
@@ -143,6 +152,8 @@ def submitdate(request):
 
         return render(request,'health/appointment_form.html',{'docData':(json.dumps(list)),'submit':1,'date':date,"appointments":appointments,"count":appointments.count()})
 
+
+@login_required
 def submitfinal(request):
     if (request.method=="GET"):
         doctor = request.GET.get("preferreddoc")
@@ -176,9 +187,12 @@ def submitfinal(request):
         return HttpResponseRedirect(reverse('book_appointment'))
     # render(request,'health/home.html')
 
+
+@login_required
 def index(request):
     return render(request,'health/index.html')
 
+@login_required(login_url="home")
 def show_appointments(request):
     appointment_list = Appointment.objects.all()
     return render(request,'health/show_appointments.html',{'appointment_list':appointment_list})

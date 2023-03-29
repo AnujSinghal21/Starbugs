@@ -6,9 +6,11 @@ from django.urls import reverse
 from datetime import datetime
 from members.models import Account
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
+@login_required
 def index(request):
     if (request.method =="POST"):
         User_Account=Account.objects.get(user=request.user)
@@ -26,6 +28,7 @@ def index(request):
         return render(request,"leaveapp/leavebase.html")
     return render(request,"leaveapp/leavebase.html",{"error":0})
 
+@login_required
 def Application_response(request):
     if request.method=="POST":
         action = request.POST.get('action')
@@ -43,6 +46,7 @@ def Application_response(request):
 
 
 #only for admin/DUGC
+@login_required
 def filterStatus(request):
     AllApps=LeaveApplication.objects.all()
     returnList=[]
@@ -61,6 +65,7 @@ def filterStatus(request):
             "Status":request.GET.get("ApplicationType"),
         })
 
+@login_required
 def viewApplications(request):
     AllApps=LeaveApplication.objects.all()
     returnList=[]

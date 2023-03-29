@@ -3,8 +3,9 @@ from .models import ambulance
 import datetime
 from django.urls import reverse  
 from django.http import HttpResponse,HttpResponseRedirect
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
+@login_required
 def index(request):
     entries=ambulance.objects.filter(status=True).order_by('bookingtime')
     if(entries.first()==None):
@@ -13,6 +14,7 @@ def index(request):
         time = int((entries.last().bookingtime-entries.first().bookingtime).seconds/60)+3
     return render(request,'ambulance/base.html',{"ambulance":entries,"entry_count":entries.count(),"time":time,"err":0})
 
+@login_required
 def submit(request):
     if(request.method=="POST"):
         name = request.POST["name"]

@@ -6,8 +6,9 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import RegisterUserForm,AccountForm
 from .models import Account
 from json import dumps
-# Create your views here.
+from django.contrib.auth.decorators import login_required
 
+# Create your views here.
 def loginUser(request):
     if request.method=='POST':
         username=request.POST['Username']
@@ -21,7 +22,6 @@ def loginUser(request):
             return redirect('loginUser')
     else:
         return render(request, 'Signing/login.html', {})
-
 
 def logoutUser(request):
     logout(request)
