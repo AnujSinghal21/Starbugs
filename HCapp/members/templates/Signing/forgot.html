@@ -18,7 +18,7 @@
                 <div class="col-md-6 p-5">
                     <h3 style='color:blue' class="mb-3">Reset Password</h3>
                     <div class="form-style">
-                        <form action="{% url 'loginUser'%}" method="POST">
+                        <form action="{% url 'PasswordReset'%}" method="POST">
                             {% csrf_token %}
                             <div class="form-group pb-3">
                                 <input type="text" name="email" placeholder="Enter email ID to send verification Code" class="form-control" id="exampleInputIdentity"></input>
@@ -27,7 +27,7 @@
                                 <button type="submit"  class="btn btn-primary w-100 font-weight-bold mt-2"> <b> GET OTP </b> </button>
                             </div>
                         </form>
-                        <form action="{% url 'loginUser'%}" method="POST">
+                        <form hidden action="{% url 'loginUser'%}" method="POST">
                             {% csrf_token %}
                             <div class="form-group pb-3">
                                 <label>Enter verification OTP</label>

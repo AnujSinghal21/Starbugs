@@ -22,8 +22,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('health.urls')),
-    path('members/',include('members.urls')),
-    path('members/',include('django.contrib.auth.urls')),
+    path('Authentication/',include('members.urls')),
+    path('Authentication/',include('django.contrib.auth.urls')),
     path('blood_donate/',include('blood_donate.urls')),
     path('ambulance/',include('ambulance.urls')),
     path('leave/',include('leaveapp.urls')),

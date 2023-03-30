@@ -34,10 +34,10 @@
                             </form>
 
                             <div class="d-flex align-items-center justify-content-between">
-                                <div><a href="/" style='color: red;'> <b>Forgot Password? </b></a></div>
+                                <div><a href="{% url 'PasswordReset'%}" style='color: red;'> <b>Forgot Password? </b></a></div>
                             </div>
                             <div class="pt-4 text-center">
-                                <b> First time User ? </b><a href="registerUser" style='color: red;'> <b> Sign Up </b></a>
+                                <b> First time User ? </b><a href="{% url 'registerUser'%}" style='color: red;'> <b> Sign Up </b></a>
                             </div>
                         </div>
                     </div>
