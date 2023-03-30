@@ -145,6 +145,18 @@
         
         <div class="mt-5 mx-5">
             <h3>Schedule New Appointment</h3>
+            <form method="get" action={% url 'submitdate' %} class="row g-3 needs-validation" novalidate id="fetch_doctors_data">
+                <label htmlFor="validationCustom04" class="form-label">Preferred Appointment Date*</label>
+                <div class="row">
+                    <div class="col-md-6">
+                        <input name="date" type="date" class="form-control" id="date_input" required></input>
+                        <div class="invalid-feedback">Can't schedule an appointment on this date!</div>
+                    </div>                    
+                    <div class="col-md-3">
+                        <button type="submit" class="btn btn-secondary" style='float: right;' type="submit">Submit Date</button>
+                    </div>
+                </div>
+            </form>
             
             <form method="get" action={% url 'submitdate' %} class="row g-3 needs-validation" novalidate>
                 <label htmlFor="validationCustom04" class="form-label">Preferred Appointment Date*</label>
@@ -301,6 +313,17 @@
                 }
             }
         </script>
+        <script>
+            var form1 = 
+            document.getElementById("fetch_doctors_data").addEventListener('submit', function (event) {
+                if (new Date(document.getElementById("date_input").value) < new Date() || document.getElementById("date_input").value == "") 			{
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            },false);
+        </script>
+        
 <!-- <h1>
     Appointment form
 </h1>
