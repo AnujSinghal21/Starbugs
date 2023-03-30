@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def index(request):
     bg=Account.objects.get(user=request.user).BloodG
-    return render(request,"blood_donate/home.html",{"rows":requester.objects.filter(status=True,blood_group=bg),"flag":0})
+    return render(request,"blood_donate/Home.html",{"rows":requester.objects.filter(status=True,blood_group=bg),"flag":0})
 
 @login_required
 def submitblood(request):
@@ -20,7 +20,7 @@ def submitblood(request):
     try:
         int(volume)
     except ValueError:
-        return render(request,"blood_donate/home.html",{"rows":requester.objects.filter(status=True),"flag":1})
+        return render(request,"blood_donate/Home.html",{"rows":requester.objects.filter(status=True),"flag":1})
         
     bloodgroup=request.POST["bloodgrp"]    
     description=request.POST["text"]
