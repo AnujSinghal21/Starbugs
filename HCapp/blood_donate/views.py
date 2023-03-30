@@ -11,7 +11,22 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def index(request):
     bg=Account.objects.get(user=request.user).BloodG
-    return render(request,"blood_donate/Home.html",{"rows":requester.objects.filter(status=True,blood_group=bg),"flag":0})
+    if bg =='A+':
+        return render(request,"blood_donate/blood_home.html",{"rows":requester.objects.filter(status=True,blood_group=bg )|requester.objects.filter(status=True,blood_group='AB+' ),"flag":0})
+    elif bg =='O+':
+        return render(request,"blood_donate/blood_home.html",{"rows":requester.objects.filter(status=True,blood_group=bg )|requester.objects.filter(status=True,blood_group='AB+' )|requester.objects.filter(status=True,blood_group='B+')|requester.objects.filter(status=True,blood_group='A+'),"flag":0})
+    elif bg =='B+':
+        return render(request,"blood_donate/blood_home.html",{"rows":requester.objects.filter(status=True,blood_group=bg )|requester.objects.filter(status=True,blood_group='AB+' ),"flag":0})
+    elif bg =='AB+':
+        return render(request,"blood_donate/blood_home.html",{"rows":requester.objects.filter(status=True,blood_group=bg ),"flag":0})
+    elif bg =='A-':
+        return render(request,"blood_donate/bloogitd_home.html",{"rows":requester.objects.filter(status=True,blood_group=bg )|requester.objects.filter(status=True,blood_group='AB+' )|requester.objects.filter(status=True,blood_group='AB-' )|requester.objects.filter(status=True,blood_group='A+'),"flag":0})
+    elif bg =='O-':
+        return render(request,"blood_donate/blood_home.html",{"rows":requester.objects.filter(status=True),"flag":0})
+    elif bg =='B-':
+        return render(request,"blood_donate/blood_home.html",{"rows":requester.objects.filter(status=True,blood_group=bg )|requester.objects.filter(status=True,blood_group='AB+' )|requester.objects.filter(status=True,blood_group='AB-' )|requester.objects.filter(status=True,blood_group='B+'),"flag":0})
+    else:
+        return render(request,"blood_donate/blood_home.html",{"rows":requester.objects.filter(status=True,blood_group=bg)|requester.objects.filter(status=True,blood_group='AB+' ),"flag":0})
 
 @login_required
 def submitblood(request):
