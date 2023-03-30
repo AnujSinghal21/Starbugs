@@ -12,6 +12,11 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 @login_required
 def index(request):
+    User_Account=Account.objects.get(user=request.user)
+    AllApps=LeaveApplication.objects.filter(Account=User_Account)
+    returnList=[]
+    for application in AllApps:
+        returnList.append(application)
     if (request.method =="POST"):
         User_Account=Account.objects.get(user=request.user)
         FromDate=request.POST["fromDate"]
@@ -25,8 +30,7 @@ def index(request):
         leave.Leave_details=Leave_detail(FromDate=FromDate,ToDate=ToDate,Prescription_Image=Image,Description=Description)
         leave.Leave_details.save()
         leave.save()
-        return render(request,"leaveapp/leavebase.html")
-    return render(request,"leaveapp/leavebase.html",{"error":0})
+    return render(request,"leaveapp/leavebase.html",{"error":0,"Queue":returnList,})
 
 @login_required
 def Application_response(request):
