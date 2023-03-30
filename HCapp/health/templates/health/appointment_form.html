@@ -80,7 +80,7 @@
                     <thead class="table-primary">
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Name</th>
+                            <th scope="col">{%if user.account.Role == 'Student'%}Doctor {%endif%}Name</th>
                             <th scope="col">Date</th>
                             <th scope="col">Visit time</th>
                             {% if user.account.Role == 'Doctor'%}

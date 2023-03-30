@@ -53,7 +53,6 @@ def getappointments(request):
     else:
         patient = Patient.objects.get(user = user)
         appointments = Appointment.objects.filter(patient = patient,status = True)
-
     return appointments
 
 @login_required
