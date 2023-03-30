@@ -72,7 +72,7 @@
                 <div class="c col-md-3 col-sm-8 border">
                     <img class="i" src="{%static 'health/images/appointment/done.png'%}" alt="" style='float: left;'></img>
                     <p class="Visits" style='color:green;'>Completed Visits</p>
-                    <p class="Visit_number">0</p>
+                    <p class="Visit_number">{{completed}}</p>
                 </div>
             </div>
             <div class="table-responsive">
@@ -86,12 +86,12 @@
                             {% if user.account.Role == 'Doctor'%}
                             <th scope="col">Gender</th>
                             {% endif%}
-                            {% if user.account.Role == 'Student' %}
+                            {% if user.account.Role == 'Student' or user.account.Role == 'DUGC' %}
                             <th scope="col">Department </th>
                             {% endif %}
 
                             {% if user.account.Role == 'Doctor'%}
-                            <th scope="col">View Details</th>
+                                <th scope="col">Create Appointment</th>
                             {% endif%}
                         </tr>
                     </thead>
@@ -104,7 +104,14 @@
                             <td>{{appointment.timeSlot.date}}</td>            
                             <td>{{appointment.timeSlot.starttime}}:00</td>
                             <td>{{appointment.patient.user.Gender}}</td>
-                            <th> <button class="View"><a href="{%url 'home_health_record' %}" class="btn btn-primary"> Create </a></button></th>
+                            <td>
+                                <form id="accept-reject-form" method="POST" action="{% url 'add_health_records'%}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="action" value="accept">
+                                    <input type="hidden" name="id" value="{{ appointment.id }}">
+                                    <button type="submit" class="btn btn-success" style="font-size: 14;" name="submit" value="accept">Create</button>
+                                </form>
+                            </td>
                         </tr>
                         {%endfor%}
                         {%else%}

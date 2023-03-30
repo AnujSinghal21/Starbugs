@@ -63,16 +63,15 @@
             
             {%if submit == 0%}
             <br>
-        
-            <form method = "get" action = {% url 'health_records' %} >
-                <div class="row">
-                  <label htmlFor="validation01" class=" form-label col-sm-2 col-form-label" style="display:inline-block">Username</label>
-                  <!-- <p>&nbsp;&nbsp;</p> -->
-                  <div class="col">
-                    <!-- <input type="email" class="form-control" id="inputEmail3"> -->
-                    <input name="username" type="text" class="form-control" required="True" placeholder="@patient" id="validation01" />
-                  </div>
-                </div>
+                <form method = "get" action = {% url 'health_records' %} >
+                    <div class="row">
+                    <label htmlFor="validation01" class=" form-label col-sm-2 col-form-label" style="display:inline-block">Username</label>
+                    <!-- <p>&nbsp;&nbsp;</p> -->
+                    <div class="col">
+                        <!-- <input type="email" class="form-control" id="inputEmail3"> -->
+                        <input name="username" type="text" class="form-control" required="True" placeholder="@patient" id="validation01" />
+                    </div>
+                    </div>
             
             <div style="display: flex; place-content: space-around space-evenly;">
 

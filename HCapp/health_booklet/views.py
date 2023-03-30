@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Patient, Doctor, HealthRecord
 from .forms import HealthRecordForm
 from members.models import Account
+from health.models import Appointment
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -19,6 +20,11 @@ def home_health_record(request):
 
 @login_required
 def add_health_record(request):
+    if request.method == 'POST':
+        appointment_id=request.POST["id"]
+        appointment=Appointment.objects.get(id=appointment_id)
+        appointment.status=False
+        appointment.save()
     return render(request,'create_health_record.html',{"submit":1})
 
 @login_required

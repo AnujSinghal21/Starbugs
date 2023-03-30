@@ -50,16 +50,19 @@ def getappointments(request):
     if(user.Role=="Doctor"):
         doctor = Doctor.objects.get(user = user)
         appointments = Appointment.objects.filter(doctor = doctor,status = True)
+        completed_appointments = Appointment.objects.filter(doctor = doctor,status = False).count()
+
     else:
         patient = Patient.objects.get(user = user)
         appointments = Appointment.objects.filter(patient = patient,status = True)
-    return appointments
+        completed_appointments = Appointment.objects.filter(patient = patient,status = False).count()
+
+    return appointments , completed_appointments
 
 @login_required
 def book_appointment(request):    
     assign_roles()
-    appointments = getappointments(request)
-
+    appointments,count_completed = getappointments(request)
     
     # submitted = False
     # if request.method=='POST':
@@ -73,7 +76,7 @@ def book_appointment(request):
     #     if 'submitted' in request.GET:
     #         submitted=True
     
-    return render(request,'health/appointment_form.html',{'submit':0,"appointments":appointments,"count":appointments.count()})
+    return render(request,'health/appointment_form.html',{'submit':0,"appointments":appointments,"count":appointments.count(),"completed":count_completed})
 
 @login_required
 def submitdate(request):
@@ -147,9 +150,9 @@ def submitdate(request):
                 list.append(dir)
         
         # print(list)
-        appointments = getappointments(request)
+        appointments,count_completed = getappointments(request)
 
-        return render(request,'health/appointment_form.html',{'docData':(json.dumps(list)),'submit':1,'date':date,"appointments":appointments,"count":appointments.count()})
+        return render(request,'health/appointment_form.html',{'docData':(json.dumps(list)),'submit':1,'date':date,"appointments":appointments,"count":appointments.count(),"completed":count_completed})
 
 
 @login_required
