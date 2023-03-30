@@ -11,15 +11,16 @@
     <body>
         {%if err%}
         <div id="alert-messages" class="alert alert-warning alert-dismissible fade show">
-            An error occured
+            An error occured, please try again.
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
         {%endif%}
         <div>
             <div class="container-sm ml-5 mr-5 mt-5">
                 <h3 style='color:blue; text-align: center;' class="mb-2 mx-4">
-                Book Ambulance
+                    Book Ambulance
                 </h3>
+                <!-- Form for booking ambulance -->
                 <form action = "{% url 'submission' %}" method="post" class="needs-validation card p-3  mx-5" novalidate style='background-color: #b2b2cc; color: blue; font-weight: 400;'>
                     {% csrf_token  %}
                     <div class="form-group row">
@@ -37,7 +38,7 @@
                             placeholder="Name"
                             required
                         ></input>
-                        <div class="invalid-feedback">Please fill the name!</div>
+                        <div class="invalid-feedback">Please fill your name!</div>
                     </div>
                     <div class="form-group row ">
                         <div class="col-md-12 col-lg-2">
@@ -72,11 +73,10 @@
                             placeholder="Please Enter"
                             required
                         ></input>
-                        <div class="invalid-feedback">Please Enter a valid phone number!</div>
+                        <div class="invalid-feedback">Please enter a valid phone number!</div>
                     </div>
                     <div class="form-group">
-                        <label>Description</label>
-                        
+                        <label>Description</label>                        
                         <input
                             type="text"
                             name = "description"
@@ -96,14 +96,13 @@
                 </form>
             </div>
             <div class="mt-4 mx-5">
+                <!-- Ambulance Queue -->
                 <h2 style='text-align: center;'>Ambulance Queue</h2>
                 <div class="row col">
-                    <div class="col-6 border mx-3 my-2" style='text-align: center; background-color: #b2b2cc; border-radius: 40px;'>
-                        
+                    <div class="col-6 border mx-3 my-2" style='text-align: center; background-color: #b2b2cc; border-radius: 40px;'>                        
                         <p>Pending : {{entry_count}}</p>
                         <hr style='margin: 0px;'></hr>
                         <p>Current ETA : {{time}} minutes</p>
-                    
                     </div>
                 </div>
                 <div class="table-responsive">
@@ -116,11 +115,9 @@
                                 <th scope="col">Book time</th>
                                 <th scope="col">Contact No.</th>
                                 <th scope="col">Pick Up</th>
-                                <!-- <th scope="col">To Drop</th> -->
                             </tr>
                         </thead>
-                        <tbody>
-                            
+                        <tbody>                            
                             {% for patients in ambulance %}
                             <tr>
                                 <th scope="row">{{forloop.counter}}</th>
@@ -129,7 +126,6 @@
                                 <td>{{patients.bookingtime}}</td>
                                 <td>{{patients.phoneno}}</td>
                                 <td>{{patients.location}}</td>
-                                <!-- <td>HC, Gate 2, IITK</td> -->
                             </tr>
                             {% endfor %}                        
                         </tbody>
@@ -138,12 +134,11 @@
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-        <script>
-            
+        <script> 
+            // JS Validation added to form
             (function () {
                 'use strict'
                 var forms = document.querySelectorAll('.needs-validation');
-                
                 Array.prototype.slice.call(forms)
                     .forEach(function (form) {
                     form.addEventListener('submit', function (event) {
