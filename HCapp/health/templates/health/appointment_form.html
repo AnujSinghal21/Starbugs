@@ -158,21 +158,8 @@
                 </div>
             </form>
             
-            <form method="get" action={% url 'submitdate' %} class="row g-3 needs-validation" novalidate>
-                <label htmlFor="validationCustom04" class="form-label">Preferred Appointment Date*</label>
-                <div class="row">
-                    <div class="col-md-6"><input name="date" type="date" class="form-control" id="validationCustom04" required></input></div>                    
-                    <div class="col-md-3">
-                        <button onsubmit='submit()' class="btn btn-secondary" style='float: right;' type="submit">Submit Date</button>
-                    </div>                    
-                    <div class="valid-feedback">
-                        Looks good!
-                    </div>
-                </div>
-            </form>
-            
             {%if submit%}
-            <form method="get" action={%url 'submitfinal'%} class="row g-3 needs-validation" novalidate>
+            <form method="get" action={%url 'submitfinal'%} class="row g-3 needs-validation" novalidate id="appointment_form">
                 {% csrf_token %}
                 <div class="col-sm-8 col-lg-6" >
 
@@ -215,7 +202,7 @@
                     </div>
                 </div>
                 <div class="col-7">
-                    <button onclick="submit()" name="date1" value={{date}} class="btn btn-primary" style='float: right;' type="submit">Book Appointment</button>
+                    <button type="submit" name="date1" value={{date}} class="btn btn-primary" style='float: right;' type="submit">Book Appointment</button>
                 </div>
             </form>
             {%endif%}
@@ -314,13 +301,20 @@
             }
         </script>
         <script>
-            var form1 = 
+            var form1 = document.getElementById("fetch_doctors_data"); 
+            var form2 = document.getElementById("appointment_form"); 
             document.getElementById("fetch_doctors_data").addEventListener('submit', function (event) {
                 if (new Date(document.getElementById("date_input").value) < new Date() || document.getElementById("date_input").value == "") 			{
                     event.preventDefault();
                     event.stopPropagation();
                 }
-                form.classList.add('was-validated');
+            },false);
+            document.getElementById("appointment_form").addEventListener('submit', function (event) {
+                if (!form2.checkValidity()){
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form2.classList.add('was-validated');
             },false);
         </script>
         
