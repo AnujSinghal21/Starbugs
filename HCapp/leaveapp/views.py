@@ -35,12 +35,12 @@ def index(request):
 @login_required
 def Application_response(request):
     if request.method=="POST":
-        action = request.POST.get('action')
+        action = request.POST.get('action') 
         id = request.POST.get('id')
         obj = get_object_or_404(LeaveApplication, id=id)
         print(action)
         if action == "accept":
-            obj.Status="Accepted"
+            obj.Status="Approved"
             obj.save()
         elif action == "reject":
             obj.Status="Rejected"
@@ -55,8 +55,8 @@ def filterStatus(request):
     AllApps=LeaveApplication.objects.all()
     returnList=[]
     if(request.method =="GET"):
-        print("HELLO")
-        if(request.GET.get("ApplicationType")=="Approved"):
+        action = request.GET.get("submit")
+        if(action=="Approved"):
             for application in AllApps:
                 if (application.Status=="Approved"):
                     returnList.append(application)
@@ -64,10 +64,16 @@ def filterStatus(request):
             for application in AllApps:
                 if (application.Status=="Pending"):
                     returnList.append(application)
-        return render(request,"leaveapp/ViewApplications.html",{
-            "Queue":returnList,
-            "Status":request.GET.get("ApplicationType"),
-        })
+        previous_url = request.META.get('HTTP_REFERER')
+        # return render(request,"leaveapp/ViewApplications.html",{
+        #     "Queue":returnList,
+        #     "Status":request.GET.get("ApplicationType"),
+        passing={
+            'Queue':returnList,
+            "Status":action,
+        }
+        # return HttpResponseRedirect(f"{previous_url}?{'&'.join([f'{k}={v}' for k, v in passing.items()])}")
+        return render(request,'leaveapp/ViewApplications.html',passing)
 
 @login_required
 def viewApplications(request):
