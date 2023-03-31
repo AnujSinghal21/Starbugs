@@ -89,37 +89,40 @@
                         <li class="nav-item">
                             {% if user.account.Role == 'DUGC'%}
                             <a class="nav-link" href="{% url 'ViewApplications' %}">
-                                Leave Application
+                                Leave Applications
                             </a>
-                            
-                            {% elif user.account.Role == 'Student'%}
+                            {% else%}
+                            {%if user.account.Role == 'Student' %}
                             <a class="nav-link" href="{% url 'leave' %}">
                                 Leave Application
                             </a>
                             {%endif%}
+                            {%endif%}
                         </li>
+                        {%if user.account.Role == 'Student' %}
                         <li class="nav-item">
                             <a class="nav-link" href="/blood_donate">
                                 Request Blood
                             </a>
                         </li>
-                       {% if user.account.Role != 'Ambulance'%}
+                        {%endif%}
+                        {%if user.account.Role == 'Student' %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'book_appointment'%}">
                                 Appointment
                             </a>
                         </li>
                         {% endif %}
-                        {% if user.account.Role == 'Student'%}
+                        {% if user.account.Role == 'Student' or user.account.Role == 'Receptionist'%}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'health_records'%}">
-                                Health Records
+                                Heath Records
                             </a>
                         </li>
-                        {% elif user.account.Role == 'Receptionist' or user.account.Role == 'Doctor'%}
+                        {% elif user.account.Role == 'Student' or user.account.Role == 'Doctor'%}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'home_health_record'%}">
-                                Health Records
+                                Heath Records
                             </a>
                         </li>
                         {% endif%}

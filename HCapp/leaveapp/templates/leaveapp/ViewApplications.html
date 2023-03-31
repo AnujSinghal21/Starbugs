@@ -23,38 +23,12 @@
             margin-right: auto;
             width: 50%;
         }
-        #accept-reject-form{
-            display: inline;
-        }
-        .request-status{
-            background-color: gray;
-        }
-        .request-status:hover{
-            background-color: rgb(89, 89, 93);
-        }
     </style>
 </head>
 
 <body>
+    {%if user.account.Role == 'Student' %}
     <div class="container shadow min-vh-100 py-2">
-        <div class="filter">
-            <div class="row">
-                <div class="col-6">
-                    <form id="Accepted" method="GET" action="{% url 'filterStatus'%}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn col-12 request-status" style="font-size: 14;" name="submit" value="Approved">Approved Requests</button>
-                    </form>        
-                </div>
-                <div class="col-6">
-                    <form id="Pending" method="GET" action="{% url 'filterStatus'%}">
-                        {% csrf_token %}
-                        <button type="submit" class="btn col-12 request-status" style="font-size: 14;" name="submit" value="Pending">Pending Requests</button>
-                    </form>        
-                </div>
-            </div>
-                
-        <h1>{{action}}</h1>
-        </div>
         <div class="table-responsive">
             <table class="table accordion">
                 <thead class="table-primary">
@@ -84,14 +58,14 @@
                                 <input type="hidden" name="action" value="accept">
                                 <input type="hidden" name="id" value="{{ Application.id }}">
                                 <button type="submit" class="btn btn-success" style="font-size: 14;" name="submit" value="accept">Accept</button>
-                            </form>
+                                </form>
                                 
                             <form id="accept-reject-form" method="POST" action="{% url 'Application_Response'%}">
                                 {% csrf_token %}
                                 <input type="hidden" name="action" value="reject">
                                 <input type="hidden" name="id" value="{{ Application.id }}">
                                 <button type="submit" class="btn btn-danger" style="font-size: 14;" name="submit" value="reject">Reject</button>
-                            </form>
+                                </form>
                         </td>
                         {%endif%}
                         {% if Status == 'Approved' %}
@@ -124,6 +98,8 @@
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
 </body>
-
+{%else%}
+<h1>You are not authorized to acces this page</h1>
+{%endif%}
 </html>
 {% endblock %}

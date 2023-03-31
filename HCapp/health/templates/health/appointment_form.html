@@ -54,6 +54,7 @@
             }
         </style>
     </head>
+    {%if user.account.Role == 'Student' or user.account.Role == 'Doctor' %}
     <body>
 
         <div class="appointmentList">
@@ -72,7 +73,7 @@
                 <div class="c col-md-3 col-sm-8 border">
                     <img class="i" src="{%static 'health/images/appointment/done.png'%}" alt="" style='float: left;'></img>
                     <p class="Visits" style='color:green;'>Completed Visits</p>
-                    <p class="Visit_number">{{completed}}</p>
+                    <p class="Visit_number">0</p>
                 </div>
             </div>
             <div class="table-responsive">
@@ -80,18 +81,18 @@
                     <thead class="table-primary">
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">{%if user.account.Role == 'Student'%}Doctor {%endif%}Name</th>
+                            <th scope="col">Name</th>
                             <th scope="col">Date</th>
                             <th scope="col">Visit time</th>
                             {% if user.account.Role == 'Doctor'%}
                             <th scope="col">Gender</th>
                             {% endif%}
-                            {% if user.account.Role == 'Student' or user.account.Role == 'DUGC' %}
+                            {% if user.account.Role == 'Student' %}
                             <th scope="col">Department </th>
                             {% endif %}
 
                             {% if user.account.Role == 'Doctor'%}
-                                <th scope="col">Create Appointment</th>
+                            <th scope="col">View Details</th>
                             {% endif%}
                         </tr>
                     </thead>
@@ -104,14 +105,7 @@
                             <td>{{appointment.timeSlot.date}}</td>            
                             <td>{{appointment.timeSlot.starttime}}:00</td>
                             <td>{{appointment.patient.user.Gender}}</td>
-                            <td>
-                                <form id="accept-reject-form" method="POST" action="{% url 'add_health_records'%}">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="action" value="accept">
-                                    <input type="hidden" name="id" value="{{ appointment.id }}">
-                                    <button type="submit" class="btn btn-success" style="font-size: 14;" name="submit" value="accept">Create</button>
-                                </form>
-                            </td>
+                            <th> <button class="View"><a href="{%url 'home_health_record' %}" class="btn btn-primary"> Create </a></button></th>
                         </tr>
                         {%endfor%}
                         {%else%}
@@ -145,21 +139,22 @@
         
         <div class="mt-5 mx-5">
             <h3>Schedule New Appointment</h3>
-            <form method="get" action={% url 'submitdate' %} class="row g-3 needs-validation" novalidate id="fetch_doctors_data">
+            
+            <form method="get" action={% url 'submitdate' %} class="row g-3 needs-validation" novalidate>
                 <label htmlFor="validationCustom04" class="form-label">Preferred Appointment Date*</label>
                 <div class="row">
-                    <div class="col-md-6">
-                        <input name="date" type="date" class="form-control" id="date_input" required></input>
-                        <div class="invalid-feedback">Can't schedule an appointment on this date!</div>
-                    </div>                    
+                    <div class="col-md-6"><input name="date" type="date" class="form-control" id="validationCustom04" required></input></div>                    
                     <div class="col-md-3">
-                        <button type="submit" class="btn btn-secondary" style='float: right;' type="submit">Submit Date</button>
+                        <button onsubmit='submit()' class="btn btn-secondary" style='float: right;' type="submit">Submit Date</button>
+                    </div>                    
+                    <div class="valid-feedback">
+                        Looks good!
                     </div>
                 </div>
             </form>
             
             {%if submit%}
-            <form method="get" action={%url 'submitfinal'%} class="row g-3 needs-validation" novalidate id="appointment_form">
+            <form method="get" action={%url 'submitfinal'%} class="row g-3 needs-validation" novalidate>
                 {% csrf_token %}
                 <div class="col-sm-8 col-lg-6" >
 
@@ -202,7 +197,7 @@
                     </div>
                 </div>
                 <div class="col-7">
-                    <button type="submit" name="date1" value={{date}} class="btn btn-primary" style='float: right;' type="submit">Book Appointment</button>
+                    <button onclick="submit()" name="date1" value={{date}} class="btn btn-primary" style='float: right;' type="submit">Book Appointment</button>
                 </div>
             </form>
             {%endif%}
@@ -300,24 +295,9 @@
                 }
             }
         </script>
-        <script>
-            var form1 = document.getElementById("fetch_doctors_data"); 
-            var form2 = document.getElementById("appointment_form"); 
-            document.getElementById("fetch_doctors_data").addEventListener('submit', function (event) {
-                if (new Date(document.getElementById("date_input").value) < new Date() || document.getElementById("date_input").value == "") 			{
-                    event.preventDefault();
-                    event.stopPropagation();
-                }
-            },false);
-            document.getElementById("appointment_form").addEventListener('submit', function (event) {
-                if (!form2.checkValidity()){
-                    event.preventDefault();
-                    event.stopPropagation();
-                }
-                form2.classList.add('was-validated');
-            },false);
-        </script>
-        
+        {%else%}
+        <h1>You are not authorized to access this page</h1>
+        {%endif%}
 <!-- <h1>
     Appointment form
 </h1>

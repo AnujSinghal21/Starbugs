@@ -1,4 +1,4 @@
-    {% extends 'health/base.html' %}
+{% extends 'health/base.html' %}
 {% block content %}
 <html lang="en">
 
@@ -16,7 +16,7 @@
         }
     </style>
 </head>
-
+{%if user.account.Role == 'Student' %}
 <body>
     <div class="container shadow min-vh-100 py-2">
         <div class="table-responsive">
@@ -75,6 +75,8 @@
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
 </body>
-
+{%else%}
+<h1>You are not authorized to access this page</h1>
+{%endif%}
 </html>
 {%endblock%}
