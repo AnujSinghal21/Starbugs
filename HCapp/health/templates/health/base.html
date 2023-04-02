@@ -99,14 +99,14 @@
                             {%endif%}
                             {%endif%}
                         </li>
-                        {%if user.account.Role == 'Student' %}
+                        {%if user.account.Role == 'Student' or user.account.Role == 'Receptionist' %}
                         <li class="nav-item">
                             <a class="nav-link" href="/blood_donate">
                                 Request Blood
                             </a>
                         </li>
                         {%endif%}
-                        {%if user.account.Role == 'Student' %}
+                        {%if user.account.Role == 'Student' or user.account.Role == 'Receptionist' %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'book_appointment'%}">
                                 Appointment
@@ -116,7 +116,7 @@
                         {% if user.account.Role == 'Student' or user.account.Role == 'Receptionist'%}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'health_records'%}">
-                                Heath Records
+                                Health Records
                             </a>
                         </li>
                         {% elif user.account.Role == 'Student' or user.account.Role == 'Doctor'%}
