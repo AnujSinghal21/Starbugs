@@ -93,8 +93,8 @@
             </form>
             
 
-            <form method = "POST" action = {% url 'add_health_records' %} >
-
+            <form method = "GET" action = {% url 'add_health_records' %} >
+                {% csrf_token %}
             <div style="display: flex; place-content: space-around space-evenly;">
                 <div class="button">
                     <button type="submit" onclick = submit() name="value" value="create" class="btn btn-primary">Create Health Records</button>
