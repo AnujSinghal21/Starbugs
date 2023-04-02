@@ -21,7 +21,7 @@
                         <div class="form-style">
 
                             <form action="{% url 'loginUser'%}" method="POST">
-                                {% csrf_token %}
+                                {% csrf_token   %}
                                 <div class="form-group pb-3">
                                     <input type="text" name="Username" placeholder="Username" class="form-control" id="exampleInputIdentity"></input>
                                 </div>

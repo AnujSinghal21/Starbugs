@@ -55,7 +55,7 @@
             }
         </style>
     </head>
-    {%if user.account.Role == 'Student' %}
+    {%if user.account.Role == 'Student' or user.account.Role == 'Doctor'%}
     <body>
         <div class="mt-5 mx-5">
             <!-- <h3>Add New Medical Record</h3> -->

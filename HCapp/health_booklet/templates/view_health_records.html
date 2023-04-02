@@ -16,7 +16,7 @@
         }
     </style>
 </head>
-{%if user.account.Role == 'Student' %}
+{%if user.account.Role == 'Student' or user.account.Role == 'Receptionist' or user.account.Role == 'Doctor'%}
 <body>
     <div class="container shadow min-vh-100 py-2">
         <div class="table-responsive">

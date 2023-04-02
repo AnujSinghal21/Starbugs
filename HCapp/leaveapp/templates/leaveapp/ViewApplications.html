@@ -27,7 +27,7 @@
 </head>
 
 <body>
-    {%if user.account.Role == 'Student' %}
+    {%if user.account.Role == 'Student' or user.account.Role == 'DUGC'%}
     <div class="container shadow min-vh-100 py-2">
         <div class="table-responsive">
             <table class="table accordion">
