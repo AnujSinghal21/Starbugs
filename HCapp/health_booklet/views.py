@@ -52,18 +52,21 @@ def create_health_record(request):
 
 @login_required
 def view_health_records(request):
-    a = request.user
-    account = Account.objects.get(user=a).Role
-    if(account=="Doctor" or account=="Receptionist"):
-        username=request.GET["username"]
-        user = Account.objects.get(user = User.objects.get(username=username))
-        patient = Patient.objects.get(user = user)
-    elif(account=="Student"):
-        patient = Patient.objects.get(user=Account.objects.get(user=request.user))
+    patient="NULL"
+    if request == 'POST': 
+        a = request.user
+        account = Account.objects.get(user=a).Role
+        if(account=="Doctor" or account=="Receptionist"):
+            username=request.GET["username"]
+            user = Account.objects.get(user = User.objects.get(username=username))
+            patient = Patient.objects.get(user = user)
+        elif(account=="Student"):
+            patient = Patient.objects.get(user=Account.objects.get(user=request.user))
+        else:
+            return redirect('home')
+        health_records = HealthRecord.objects.filter(patient=patient)
     else:
-        return redirect('home')
-    
-    health_records = HealthRecord.objects.filter(patient=patient)
+        health_records=HealthRecord.objects.all()
     for record in health_records:
         record.date = record.datetime.date()
         record.time = record.datetime.time()

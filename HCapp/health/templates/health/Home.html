@@ -166,6 +166,8 @@
             // })
             // hiddenElements.forEach(el => observer.observe(el));
         </script>
+
+    {% comment %} <h1>You are a {{user.account.Role}}</h1> {% endcomment %}
 <!-- <h1>Hello  22 3!!</h1>
 
  <a href="{% url 'home'%}">
@@ -186,7 +188,7 @@
 <a>
   Hello!! {{user.username}}<br>
 
-  You are a {{user.account.Role}}
+ 
 </a><br>
 
 <a href = "{% url 'logoutUser' %}">
