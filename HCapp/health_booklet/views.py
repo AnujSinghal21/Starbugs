@@ -32,7 +32,7 @@ def add_health_record(request):
 
 @login_required
 def create_health_record(request):
-    if request.method == 'POST':
+    if request.method == 'POST':    
         # form = HealthRecordForm(request.POST)
         # if form.is_valid():
         #     health_record = form.save(commit=False)
@@ -66,7 +66,9 @@ def create_health_record(request):
 @login_required
 def view_health_records(request):
     patient="NULL"
-    if request == 'POST': 
+    # print(request.username)
+    if request == "POST":
+        return redirect('home')
         a = request.user
         account = Account.objects.get(user=a).Role
         if(account=="Doctor" or account=="Receptionist"):
@@ -79,9 +81,9 @@ def view_health_records(request):
             return redirect('home')
         health_records = HealthRecord.objects.filter(patient=patient)
     else:
-        if(request.user.account.Role=='Doctor'):
-            print("hello")
-        health_records=HealthRecord.objects.all()
+        # if(request.user.account.Role=='Doctor'):
+        cur=request.POST["username"]
+        health_records=HealthRecord.objects.filter(patient=Patient.objects.get(user=Account.objects.get(user=User.objects.get(username=cur))))
     for record in health_records:
         record.date = record.datetime.date()
         record.time = record.datetime.time()
