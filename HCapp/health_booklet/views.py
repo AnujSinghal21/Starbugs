@@ -5,6 +5,9 @@ from .forms import HealthRecordForm
 from members.models import Account
 from health.models import Appointment
 from django.contrib.auth.models import User
+from django.contrib import messages
+from django.http import HttpResponseRedirect
+
 
 # Create your views here.
 
@@ -42,12 +45,22 @@ def create_health_record(request):
         symptoms= request.POST["symptoms"]
         prescription = request.POST["prescription"]
         comment = request.POST["comments"]
-        user = Account.objects.get(user = User.objects.get(username=username))
-        patient = Patient.objects.get(user = user)
-        doctor = Doctor.objects.get(user=Account.objects.get(user=request.user))
-        entry = HealthRecord.objects.create(patient = patient, doctor = doctor, disease = disease,symptoms = symptoms, prescription = prescription, comments = comment)
-        entry.save()
-    return render(request, 'create_health_record.html',)
+        user=request.user
+        try:
+            user = User.objects.get(username=username)
+        except user.DoesNotExist:
+            user = None
+        if user is None:
+            messages.error(request, 'Invalid username')
+            return HttpResponseRedirect('/health_booklet/add_health_record?value=create')
+        else:
+            user = Account.objects.get(user = User.objects.get(username=username))
+            patient = Patient.objects.get(user = user)
+            doctor = Doctor.objects.get(user=Account.objects.get(user=request.user))
+            entry = HealthRecord.objects.create(patient = patient, doctor = doctor, disease = disease,symptoms = symptoms, prescription = prescription, comments = comment)
+            entry.save()
+       # if not entry.is_valid(): 
+    return render(request, 'create_health_record.html')
 
 
 @login_required
@@ -66,6 +79,8 @@ def view_health_records(request):
             return redirect('home')
         health_records = HealthRecord.objects.filter(patient=patient)
     else:
+        if(request.user.account.Role=='Doctor'):
+            print("hello")
         health_records=HealthRecord.objects.all()
     for record in health_records:
         record.date = record.datetime.date()
