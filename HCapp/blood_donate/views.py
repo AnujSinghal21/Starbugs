@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from .models import requester
 from members.models import Account
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
 
 
 @login_required
@@ -49,9 +50,9 @@ def submitblood(request):
 @login_required
 def donate(request):
     if request.method=='POST':
-        receiver=request.POST["receiver"]
+        receiverReqid=request.POST["Reqid"]
         # print(receiver)
-        return render(request,"blood_donate/accept.html",{"receiver_id":receiver})
+        return render(request,"blood_donate/accept.html",{"BloodReqid":receiverReqid})
 
 @login_required
 def confirm(request):

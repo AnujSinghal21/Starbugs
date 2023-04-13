@@ -73,35 +73,36 @@
                 </form>
             </div>
             <div class="mt-5">
-                <h3 style='color: blue;margin-bottom:20px; text-align:center;margin-left:30px;'>Open Blood Donation Requests</h3> 
+                <h3 style='color: blue;margin-bottom:20px; text-align:center;margin-left:30px;'>Open Blood Donation Requests, You can donate</h3> 
                 <div class="table-responsive">
-
-                    <form method="post" action="{% url 'donate' %}">
-                        {% csrf_token %}
-                        <table class="table table-bordered table-hover">
-                               <thead class="table-primary">
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Requester's Name </th>
-                                    <th scope="col">Blood Group </th>
-                                    <th scope="col">Volume Required</th>
-                                    <th scope="col">Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for r in rows %} 
-                                <tr>
-                                    <!-- <td className="font-weight-bold">{{r.id}}</td> -->
-                                    <td className="font-weight-bold">{{ forloop.counter }}</td>
-                                    <td class="text-primary">{{r.name}}</td>
-                                    <td>{{r.blood_group}}</td>
-                                    <td>{{r.volume}}</td>
-                                    <td><p>{{r.description}}</p></td>
-                                </tr> 
-                                {% endfor %}                             
-                            </tbody>
-                        </table>
-                    </form>
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-primary">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Requester's Name </th>
+                                <th scope="col">Blood Group </th>
+                                <th scope="col">Volume Required</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Donate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for r in rows %}
+                            <tr>
+                                <!-- <td className="font-weight-bold">{{r.id}}</td> -->
+                                <td className="font-weight-bold" >{{ forloop.counter }}</td>
+                                <td class="text-primary">{{r.name}}</td>
+                                <td >{{r.blood_group}}</td>
+                                <td > {{r.volume}}</td>
+                                <td ><p>{{r.description}}</p></td>
+                                <form method="post" action="{% url 'donate' %}">
+                                    {% csrf_token %}
+                                    <td><button type="submit" onclick="submit()" class="btn btn-success" style="font-size: 14;" name="Reqid" value="{{r.id}}">Donated</button></td>
+                                </form>
+                            </tr> 
+                            {% endfor %}                             
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

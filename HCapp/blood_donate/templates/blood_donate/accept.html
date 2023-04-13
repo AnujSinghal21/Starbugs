@@ -4,10 +4,10 @@
     <title>Health++</title>
 </head>
 <body>
-    <h1>You Sure?</h1>
-    <form action={% url 'confirm' %} method="post">
+    <h1>Do you want to close this request?</h1>
+    <form action="{% url 'confirm' %}" method="post">
         {% csrf_token %}
-        <input type="hidden" name="id" value={{receiver_id}}>
+        <input type="hidden" name="id" value={{BloodReqid}}>
         <input type="submit" name="status" value="Yes">
         <input type="submit" name="status" value="No">
     </form>
