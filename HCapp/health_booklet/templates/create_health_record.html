@@ -72,7 +72,7 @@
                   <!-- <p>&nbsp;&nbsp;</p> -->
                   <div class="col">
                     <!-- <input type="email" class="form-control" id="inputEmail3"> -->
-                    <input name="username" type="text" class="form-control" required="True" placeholder="@patient" id="validation01" />
+                    <input name="username" type="text" class="form-control" required placeholder="@patient" id="validation01" />
                     {% comment %} <input type="submit"> {% endcomment %}
                 </div>
                 </div>
@@ -87,7 +87,7 @@
                 </form>  -->
             
                 <div class="button">
-                    <button type="button" onclick = submit() name="value" class="btn btn-primary">View Health Records</button>
+                    <button type="submit" name="value" class="btn btn-primary">View Health Records</button>
                 </div>
             </div>  
             </form>
@@ -97,7 +97,7 @@
                 {% csrf_token %}
             <div style="display: flex; place-content: space-around space-evenly;">
                 <div class="button">
-                    <button type="submit" onclick = submit() name="value" value="create" class="btn btn-primary">Create Health Records</button>
+                    <button type="submit" name="value" value="create" class="btn btn-primary">Create Health Records</button>
                 </div>
             </div>  
             </form>
