@@ -6,7 +6,7 @@ class donator(models.Model):
     name=models.CharField(max_length=60)
     email = models.EmailField()
     CCID = models.CharField(max_length=12)
-    PhnNo=models.CharField(max_length=13)
+    PhnNo=models.CharField(max_length=13,default=919191919191,blank=True)
 
 class Bloodrequest(models.Model):
     # requester_id=models.

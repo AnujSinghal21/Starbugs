@@ -64,7 +64,7 @@ def closeRequest(request):
 def donate(request):
     if request.method=='POST':
         donatorAcc=Account.objects.get(user=request.user)
-        donatorobj=donator(name=donatorAcc.user.get_full_name(),email=donatorAcc.user.email,CCID=donatorAcc.CCID,PhnNo=donatorAcc.ContactNo)
+        donatorobj=donator(name=donatorAcc.user.get_full_name(),email=donatorAcc.user.email,CCID=donatorAcc.CCID)
         donatorobj.save()
         Bloodreq=Bloodrequest.objects.get(id=request.POST["Reqid"])
         Bloodreq.Donator=donatorobj
