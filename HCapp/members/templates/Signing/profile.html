@@ -1,0 +1,57 @@
+{% extends 'health/base.html' %}
+{% load static %}
+{% block content %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<style>
+.img{
+ 
+margin-top: 60px;
+margin-left: 50px;
+
+}
+
+  .center {
+    position:absolute;
+    top: 10%;
+    left: 40%;
+  }
+    
+
+.card {
+    margin-left: -10%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    font-size: 20px;
+}
+
+</style>
+<body>
+    <div class="center">
+
+        <img class="img" loading="lazy" src="https://hello.iitk.ac.in/sites/default/files/styles/thumbnail/public/default_images/default.png?itok=Exvu-2xK" alt="Profile picture">
+        <h2 style="margin-left: -25px; display: flex; justify-content: center;" >{{user.first_name}} {{user.last_name}}</h2>
+
+    <div class="card">
+        <p><strong>Username:</strong> {{user.username}} </p>
+        <p><strong>Email:</strong> {{user.email}}</p>
+        <p><strong>Contact:</strong> Number</p>
+        <p><strong>Role:</strong> {{user.account.Role}}</p>
+        <p><strong>Blood Group:</strong> {{user.account.BloodG}} </p>
+    </div>
+ 
+    </div>      
+     
+</body>
+</html>
+{%endblock%}

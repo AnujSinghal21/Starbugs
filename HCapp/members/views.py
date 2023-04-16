@@ -55,4 +55,8 @@ def registerUser(request):
             username = accounts.user.username
             Usernames.append(username)
         Usernames=dumps(Usernames)
+        
         return render(request,'Signing/register.html',{"Usernames":Usernames})
+    
+def ShowProfile(request):
+    return render(request,'Signing/profile.html')
