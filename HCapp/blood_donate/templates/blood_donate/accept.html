@@ -4,12 +4,21 @@
     <title>Health++</title>
 </head>
 <body>
-    <h1>Do you want to close this request?</h1>
+    <h1>Do you want to close this Blood request?</h1>
+    <strong>
+    <br>
+    {{BloodReq.name}}
+    <br>
+    {{BloodReq.blood_group}}
+    <br>
+    {{BloodReq.volume}}
+    </strong>
+    <p>{{BloodReq.description}}</p>
     <form action="{% url 'confirm' %}" method="post">
         {% csrf_token %}
-        <input type="hidden" name="id" value={{BloodReqid}}>
-        <input type="submit" name="status" value="Yes">
-        <input type="submit" name="status" value="No">
+        <input type="hidden" name="id" value={{BloodReq.id}}>
+        <input type="submit" name="status" value="Close">
+        <input type="submit" name="status" value="Back">
     </form>
 </body> 
 </html>

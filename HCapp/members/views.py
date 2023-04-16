@@ -39,9 +39,10 @@ def registerUser(request):
         BloodG=request.POST["BloodG"]
         CCID=request.POST["CCID"]
         Gender=request.POST["Gender"]
+        contact=request.POST["Contact"]
         user=User.objects.create_user(username=username, password=password, email=email, first_name=first_name, last_name=last_name)
         user.save()
-        acc=Account(user=user,DOB=DOB, Gender = Gender,BloodG=BloodG,CCID=CCID)
+        acc=Account(user=user,DOB=DOB, Gender = Gender,BloodG=BloodG,CCID=CCID,ContactNo=contact)
         acc.save()
         messages.success(request,"Registration Successful")
         user = authenticate(username=username,password=password)

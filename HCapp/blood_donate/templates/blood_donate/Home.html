@@ -89,16 +89,36 @@
                         <tbody>
                             {% for r in rows %}
                             <tr>
-                                <!-- <td className="font-weight-bold">{{r.id}}</td> -->
                                 <td className="font-weight-bold" >{{ forloop.counter }}</td>
                                 <td class="text-primary">{{r.name}}</td>
                                 <td >{{r.blood_group}}</td>
                                 <td > {{r.volume}}</td>
                                 <td ><p>{{r.description}}</p></td>
-                                <form method="post" action="{% url 'donate' %}">
-                                    {% csrf_token %}
-                                    <td><button type="submit" onclick="submit()" class="btn btn-success" style="font-size: 14;" name="Reqid" value="{{r.id}}">Donated</button></td>
-                                </form>
+                                <td>
+                                    {% if user.account.role == 'Receptionist' %}
+                                    <form method="post" action="{% url 'closeRequest' %}">
+                                        {% csrf_token %}
+                                        <button type="submit" onclick="submit()" class="btn btn-success" style="font-size: 14;" name="Reqid" value="{{r.id}}">Close Request</button>
+                                    </form>
+                                    {% else %}
+                                    {% if user == r.user %}
+                                    <form method="get" action="{% url 'closeRequest' %}">
+                                        {% csrf_token %}
+                                        <button type="submit" onclick="submit()" class="btn btn-success" style="font-size: 14;" name="Reqid" value="{{r.id}}">Close Request</button>
+                                    </form>
+                                    {% else %}
+                                    <form method="post" action="{% url 'donate' %}">
+                                        {% csrf_token %}
+                                            <!-- assuming CCIDs to be unique for all users -->
+                                            {% if user.account.CCID == r.Donator.CCID %}
+                                            <strong><em>Donation requested</em></strong>
+                                            {%else%}
+                                            <button type="submit" onclick="submit()" class="btn btn-success" style="font-size: 14;" name="Reqid" value="{{r.id}}">Donate Blood</button>
+                                            {%endif%}
+                                    </form>
+                                    {% endif %}
+                                    {% endif %}
+                                </td>
                             </tr> 
                             {% endfor %}                             
                         </tbody>

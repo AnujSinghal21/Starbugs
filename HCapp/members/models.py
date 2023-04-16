@@ -26,5 +26,6 @@ class Account(models.Model):
     BloodG=models.CharField(choices=BloodG,null=True,max_length=20)
     CCID=models.CharField(null=True,max_length=20)
     Gender=models.CharField(null=True,default='Male',max_length=10)
+    ContactNo=models.CharField(null=True,blank=True,max_length=13)
     def __str__(self):
         return self.user.username
