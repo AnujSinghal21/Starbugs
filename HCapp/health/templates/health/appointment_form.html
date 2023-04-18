@@ -54,7 +54,7 @@
             }
         </style>
     </head>
-    {%if user.account.Role == 'Student' or user.account.Role == 'Doctor' %}
+    {%if user.account.Role == 'Student' or user.account.Role == 'Doctor' or user.account.Role == 'Receptionist'%}
     <body>
 
         <div class="appointmentList">
@@ -81,9 +81,10 @@
                     <thead class="table-primary">
                         <tr>
                             <th scope="col">#</th>
-                            {%if user.account.Role == 'Student' %}
+                            {%if user.account.Role == 'Student' or user.account.Role == 'Receptionist'%}
                             <th scope="col">Doctor's Name</th>
-                            {%else%}
+                            {%endif%}
+                            {%if user.account.Role == 'Doctor' or user.account.Role == 'Receptionist'%}
                             <th scope="col">Patient's Name</th>
                             {%endif%}
                             <th scope="col">Date</th>
@@ -112,7 +113,8 @@
                             <th> <button class="View"><a href="{%url 'home_health_record' %}" class="btn btn-primary"> Create </a></button></th>
                         </tr>
                         {%endfor%}
-                        {%else%}
+                        {%endif%}
+                        {%if user.account.Role == 'Patient'%}
                             {% for appointment in appointments %}
                         <tr>
 
@@ -121,6 +123,17 @@
                             <td>{{appointment.timeSlot.date}}</td>
                             <td>{{appointment.timeSlot.starttime}}:00</td>
                             <td>{{appointment.doctor.Department}}</td>
+                        </tr>
+                            {%endfor%}
+                        {%endif%}
+                        {%if user.account.Role == 'Receptionist'%}
+                            {% for appointment in appointments %}
+                        <tr>
+                            <th scope="row">{{forloop.counter}}</th>
+                            <td style='color: blue;'>{{appointment.doctor.Doctor_Name}}</td>
+                            <td style='color: blue;'>{{appointment.patient.Patient_Name}}</td>
+                            <td>{{appointment.timeSlot.date}}</td>
+                            <td>{{appointment.timeSlot.starttime}}:00</td>
                         </tr>
                             {%endfor%}
                         {%endif%}
