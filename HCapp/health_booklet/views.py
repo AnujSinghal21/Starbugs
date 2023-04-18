@@ -65,25 +65,18 @@ def create_health_record(request):
 
 @login_required
 def view_health_records(request):
-    patient="NULL"
-    # print(request.username)
-    if request == "POST":
-        return redirect('home')
-        a = request.user
-        account = Account.objects.get(user=a).Role
-        if(account=="Doctor" or account=="Receptionist"):
-            username=request.GET["username"]
-            user = Account.objects.get(user = User.objects.get(username=username))
-            patient = Patient.objects.get(user = user)
-        elif(account=="Student"):
-            patient = Patient.objects.get(user=Account.objects.get(user=request.user))
-        else:
-            return redirect('home')
-        health_records = HealthRecord.objects.filter(patient=patient)
+    a = request.user
+    account = Account.objects.get(user=a).Role
+    if(account=="Doctor" or account=="Receptionist"):
+        username=request.GET["username"]
+        user = Account.objects.get(user = User.objects.get(username=username))
+        patient = Patient.objects.get(user = user)
+    elif(account=="Student"):
+        patient = Patient.objects.get(user=Account.objects.get(user=request.user))
     else:
-        # if(request.user.account.Role=='Doctor'):
-        cur=request.POST["username"]
-        health_records=HealthRecord.objects.filter(patient=Patient.objects.get(user=Account.objects.get(user=User.objects.get(username=cur))))
+        return redirect('home')
+    
+    health_records = HealthRecord.objects.filter(patient=patient)
     for record in health_records:
         record.date = record.datetime.date()
         record.time = record.datetime.time()
