@@ -88,6 +88,33 @@
                         </thead>
                         <tbody>
                             {% for r in rows %}
+                            {% if user == r.user %}
+                            <tr id="row{{forloop.counter}}" onclick="showDetails('{{forloop.counter|escapejs}}')">
+                                <td className="font-weight-bold" >{{ forloop.counter }}</td>
+                                <td class="text-primary">{{r.name}}</td>
+                                <td >{{r.blood_group}}</td>
+                                <td > {{r.volume}}</td>
+                                <td ><p>{{r.description}}</p></td>
+                                <td>
+                                    <form method="get" action="{% url 'closeRequest' %}" style="margin:auto; width: fit-content;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-success" style="font-size: 14;" name="Reqid" value="{{r.id}}">Close Request</button>
+                                    </form>
+                                </td>
+        
+                            </tr>
+                            <tr id="det{{forloop.counter}}" style="display: none; width:100%;">
+                                <td colspan="6">
+                                    {%if r.Donator.name == null %}
+                                        Your request is pending to be accepted.
+                                    {%else%}
+                                    Congratulations, Your request has been accepted by <strong>{{r.Donator.name}} ({{r.Donator.CCID}})</strong>
+                                    , You can contact them at <i>{{r.Donator.PhnNo}} or {{r.Donator.email}}</i>
+                                    {%endif%}
+                                </td>
+
+                            </tr>
+                            {% else %}
                             <tr>
                                 <td className="font-weight-bold" >{{ forloop.counter }}</td>
                                 <td class="text-primary">{{r.name}}</td>
@@ -96,30 +123,24 @@
                                 <td ><p>{{r.description}}</p></td>
                                 <td>
                                     {% if user.account.Role == 'Receptionist' %}
-                                    <form method="post" action="{% url 'closeRequest' %}">
+                                    <form method="post" action="{% url 'closeRequest' %}" style="margin-left:100px; width: fit-content;">
                                         {% csrf_token %}
-                                        <button type="submit" class="btn btn-success" style="font-size: 14;" name="Reqid" value="{{r.id}}">Close Request</button>
-                                    </form>
+                                        <button type="submit"  style="font-size: 14; width: 100%;" name="Reqid" value="{{r.id}}">Close Request</button>
+                                    </form>class="\btn btn-success"
                                     {% else %}
-                                    {% if user == r.user %}
-                                    <form method="get" action="{% url 'closeRequest' %}">
-                                        {% csrf_token %}
-                                        <button type="submit" class="btn btn-success" style="font-size: 14;" name="Reqid" value="{{r.id}}">Close Request</button>
-                                    </form>
-                                    {% else %}
-                                    <form method="post" action="{% url 'donate' %}">
+                                    <form method="post" action="{% url 'donate' %}" style="margin:auto; width: fit-content;">
                                         {% csrf_token %}
                                             <!-- assuming CCIDs to be unique for all users -->
                                             {% if user.account.CCID == r.Donator.CCID %}
-                                            <strong><em>Donation requested</em></strong>
+                                            <strong><em>Thanks! Kindly donate at the HC</em></strong>
                                             {%else%}
                                             <button type="submit" class="btn btn-success" style="font-size: 14;" name="Reqid" value="{{r.id}}">Donate Blood</button>
                                             {%endif%}
                                     </form>
                                     {% endif %}
-                                    {% endif %}
                                 </td>
                             </tr> 
+                            {% endif %}
                             {% endfor %}                             
                         </tbody>
                     </table>
@@ -143,6 +164,19 @@
                     }, false)
                     })
             })();
+        </script>
+        <script>
+            // Show details
+            function showDetails(elem){
+                let n = elem;
+                let d = document.getElementById("det" + n);
+                if (d.style.display == "none"){
+                    d.style.display = "";
+                    
+                }else{
+                    d.style.display = "none";
+                }
+            }
         </script>
 
     </body>
