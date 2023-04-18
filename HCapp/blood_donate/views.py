@@ -48,19 +48,6 @@ def submitblood(request):
     return HttpResponseRedirect(reverse('blood_donate'))
 
 @login_required
-def closeRequest(request):
-    if request.method=='GET':
-        receiverReqid=request.GET["Reqid"]
-        BloodReq=Bloodrequest.objects.get(id=receiverReqid)
-        # print(BloodReq.id)
-        return render(request,"blood_donate/accept.html",{"BloodReq":BloodReq})
-
-# many to one
-# many are related to 1 like many 
-# one to one
-# many to many
-# one to many
-@login_required
 def donate(request):
     if request.method=='POST':
         donatorAcc=Account.objects.get(user=request.user)
@@ -77,14 +64,8 @@ def donate(request):
 @login_required
 def confirm(request):
     if request.method=='POST':
-        if(request.POST["status"]=='Close'):
-            r=Bloodrequest.objects.get(id=request.POST["id"])
-            print(id)
-            print("232")
-            r.status=False
-            r.save()
-            return HttpResponseRedirect(reverse(index))
-        else:
-            return HttpResponseRedirect(reverse(index))
-
+        r=Bloodrequest.objects.get(id=request.POST["id"])
+        r.status=False
+        r.save()
+        return HttpResponseRedirect(reverse(index))
 

@@ -96,9 +96,10 @@
                                 <td > {{r.volume}}</td>
                                 <td ><p>{{r.description}}</p></td>
                                 <td>
-                                    <form method="get" action="{% url 'closeRequest' %}" style="margin:auto; width: fit-content;">
+                                    <form method="post" action="{% url 'confirm' %}" style="margin:auto; width: fit-content;" onsubmit="return confirm('Are you sure you want to close this request?')">
                                         {% csrf_token %}
-                                        <button type="submit" class="btn btn-success" style="font-size: 14;" name="Reqid" value="{{r.id}}">Close Request</button>
+                                        <input type="hidden" name="id" value={{r.id}}>
+                                        <button type="submit" class="btn btn-success" style="font-size: 14;" name="status" value="Close{{r.id}}">Close Request</button>
                                     </form>
                                 </td>
         
@@ -123,10 +124,11 @@
                                 <td ><p>{{r.description}}</p></td>
                                 <td>
                                     {% if user.account.Role == 'Receptionist' %}
-                                    <form method="post" action="{% url 'closeRequest' %}" style="margin-left:100px; width: fit-content;">
+                                    <form method="post" action="{% url 'confirm' %}" style="margin:auto; width: fit-content;" onsubmit="return confirm('Are you sure you want to close this request?')">
                                         {% csrf_token %}
-                                        <button type="submit"  style="font-size: 14; width: 100%;" name="Reqid" value="{{r.id}}">Close Request</button>
-                                    </form>class="\btn btn-success"
+                                        <input type="hidden" name="id" value={{r.id}}>
+                                        <button type="submit" class="btn btn-success" style="font-size: 14;" name="status" value="Close{{r.id}}">Close Request</button>
+                                    </form>
                                     {% else %}
                                     <form method="post" action="{% url 'donate' %}" style="margin:auto; width: fit-content;">
                                         {% csrf_token %}
