@@ -52,11 +52,13 @@ def getappointments(request):
         appointments = Appointment.objects.filter(doctor = doctor,status = True)
         completed_appointments = Appointment.objects.filter(doctor = doctor,status = False).count()
 
-    else:
+    elif(user.Role=="Patient"):
         patient = Patient.objects.get(user = user)
         appointments = Appointment.objects.filter(patient = patient,status = True)
         completed_appointments = Appointment.objects.filter(patient = patient,status = False).count()
-
+    else:
+        appointments=Appointment.objects.all()
+        completed_appointments = Appointment.objects.filter(status = False).count()        
     return appointments , completed_appointments
 
 @login_required

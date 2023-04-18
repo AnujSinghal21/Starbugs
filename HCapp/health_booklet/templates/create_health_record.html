@@ -113,7 +113,7 @@
                 </div>
                 {% else%}
                     <label htmlFor="validation01" class="form-label">Username of patient</label>
-                    <input name="username1" type=hidden value={{user_name}}  class="form-control float-left" required="True" placeholder="@patient"/>
+                    <input name="username1" disabled value={{user_name}}  class="form-control float-left" required="True" placeholder="@patient"/>
                     <input type="hidden" name="app_id" value={{app_id}} /> 
                 {%endif%}
                 <div class="col-sm-8 col-lg-7">
