@@ -235,11 +235,14 @@
             });
             slotList.sort();
             slotList.forEach((slot)=>{
-                sstr += '<option>' + slot + '</option>';
+                if (slot.substr(0,2) > "07" && slot.substr(0,2) < "19"){
+                    sstr += '<option>' + slot + '</option>';
+                }
             });
             // allSlots.forEach((slot)=>{
             //     sstr += '<option>' + slot + '</option>';
             // });
+
             nameDrop.innerHTML = nstr;
             deptDrop.innerHTML = dstr;
             slotDrop.innerHTML = sstr;
@@ -260,7 +263,9 @@
                 });
                 slotList.sort();
                 slotList.forEach((slot)=>{
+                    if (slot.substr(0,2) > "07" && slot.substr(0,2) < "19"){
                     sstr += '<option>' + slot + '</option>';
+                    }
                 });
                 nameDrop.innerHTML = nstr;
                 slotDrop.innerHTML = sstr;
@@ -274,7 +279,9 @@
                 });
                 sstr = '<option selected disabled value="">Please select...</option>';
                 rdoc.slots.forEach((slot)=>{
+                    if (slot.substr(0,2) > "07" && slot.substr(0,2) < "19"){
                     sstr += '<option>' + slot + '</option>';
+                    }
                 });
                 deptDrop.value = rdoc.dept;
                 slotDrop.innerHTML = sstr;
