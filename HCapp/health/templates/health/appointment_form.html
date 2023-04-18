@@ -24,29 +24,9 @@
                 margin-left: 20px;
                 margin-right: 20px;
             }
-            .i{
-                margin: 5px;
-                width: 80px;
-                height: 80px;
-            }
             .c{
                 background-color: #d7dae0;
                 border-radius: 20px;
-            margin: 20px;
-            }
-            .Visits{
-                font-size: large;
-                margin-top: 10px;  
-                margin-left: 110px;
-                margin-right: 20px;
-                margin-bottom: 0%;
-            }
-            .Visit_number{
-                margin-top: 10px;
-                margin-left: 150px;
-                font-weight: bold;
-                font-size: large;
-                color: black;
             }
             td ,th{
                 white-space : nowrap;
@@ -59,16 +39,20 @@
 
         <div class="appointmentList">
             <h1 style='text-align: center;'>Appointment List</h1>
-            <div class="row status" >
-                <div class="c col-md-3 col-sm-8 border">
-                    <img class="i" src="{%static 'health/images/appointment/waiting.png'%}" alt="" style='float: left;'></img>
-                    <p class="Visits" style='color: blue;'>Awaiting Visits</p>
-                    <p class="Visit_number">{{count}}</p>
+            <div class="row gx-5" style="margin: auto; width: max-content;" >
+                <div class="c col-4 border m-3 gx-5">
+                    <img src="{%static 'health/images/appointment/waiting.png'%}" alt="" style='margin: auto;width: 80px; height: 80px;'></img>
+                    <div class="gx-5">
+                        <p style='text-align: center;color: blue;'>Awaiting Visits</p>
+                        <p style="text-align: center;font-weight: bold;">{{count}}</p>    
+                    </div>
                 </div>
-                <div class="c col-md-3 col-sm-8 border">
-                    <img class="i" src="{%static 'health/images/appointment/done.png'%}" alt="" style='float: left;'></img>
-                    <p class="Visits" style='color:green;'>Completed Visits</p>
-                    <p class="Visit_number">{{completed}}</p>
+                <div class="c col-4 border m-3 gx-5">
+                    <img src="{%static 'health/images/appointment/done.png'%}" alt="" style='margin: auto;width: 80px; height: 80px;'></img>
+                    <div class="gx-5">
+                        <p style='text-align: center;color: green'>Completed Visits</p>
+                        <p style="text-align: center;font-weight: bold;">{{completed}}</p>
+                    </div>  
                 </div>
             </div>
             <div class="table-responsive">
@@ -356,18 +340,7 @@
         {%else%}
         <h1>You are not authorized to access this page</h1>
         {%endif%}
-<!-- <h1>
-    Appointment form
-</h1>
 
-<form action="" method='POST'>
-    {%csrf_token%}
-
-    {{form.as_p}}
-
-    <input type ='submit',value='Book' class="btn btn-secondary">
-
-</form> -->
     </body>
     <html>
 {%endblock%}
