@@ -7,7 +7,7 @@ from .models import Bloodrequest,donator
 from members.models import Account
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-
+    
 
 @login_required
 def index(request):

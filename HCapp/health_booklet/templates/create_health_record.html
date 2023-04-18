@@ -55,7 +55,7 @@
             }
         </style>
     </head>
-    {%if user.account.Role == 'Student' or user.account.Role == 'Doctor'%}
+    {%if user.account.Role == 'Receptionist' or user.account.Role == 'Doctor'%}
     <body>
         <div class="mt-5 mx-5">
             <!-- <h3>Add New Medical Record</h3> -->
@@ -91,7 +91,6 @@
                 </div>
             </div>  
             </form>
-            
 
             <form method = "GET" action = {% url 'add_health_records' %} >
                 {% csrf_token %}
@@ -107,10 +106,16 @@
             {%if submit == 1%}
             <form method = 'POST' action={%url 'create_health_record' %} class="row g-3 needs-validation" novalidate>
                 {% csrf_token %}
+                {% if app_id == None %}
                 <div class="col-sm-8 col-lg-7">
                     <label htmlFor="validation01" class="form-label">Username of patient</label>
                     <input name="username1" type="text"  class="form-control float-left" required="True" placeholder="@patient"/>
                 </div>
+                {% else%}
+                    <label htmlFor="validation01" class="form-label">Username of patient</label>
+                    <input name="username1" type=hidden value={{user_name}}  class="form-control float-left" required="True" placeholder="@patient"/>
+                    <input type="hidden" name="app_id" value={{app_id}} /> 
+                {%endif%}
                 <div class="col-sm-8 col-lg-7">
                     <label htmlFor="validation02" class="form-label">Disease Diagnosed</label>
                     <input type="text" name="disease" class="form-control float-left" required="True" placeholder="e.g. Dengue/Fever"/>

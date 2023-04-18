@@ -19,11 +19,22 @@ from django.http import HttpResponseRedirect
 #         return render(request,'health_records')
 @login_required
 def home_health_record(request):
-    return render(request,'create_health_record.html',{"submit":0})
+    if (request.method == 'POST'): 
+        submit_val=1
+        AppID=request.POST["AppID"]
+        appointment=Appointment.objects.get(id=AppID)
+        user_name=appointment.patient.user.user.username
+    else: 
+        AppID=None
+        submit_val=0
+        user_name=None
+    print(submit_val)
+    
+    return render(request,'create_health_record.html',{"submit":submit_val,"user_name":user_name,"app_id":AppID})
 
 @login_required
 def add_health_record(request):
-    if request.method == 'POST':
+    if request.method == 'POST':    
         appointment_id=request.POST["id"]
         appointment=Appointment.objects.get(id=appointment_id)
         appointment.status=False
@@ -41,6 +52,13 @@ def create_health_record(request):
         #     health_record.save()
         #     return redirect('health_records', patient_id=patient.id)
         username=request.POST["username1"]
+        AppID=request.POST["app_id"]
+        if(AppID is not None):
+            appointment=Appointment.objects.get(id=AppID)
+            appointment.status=False
+            user_name=appointment.patient.user.user.username
+            appointment.save()
+
         disease = request.POST["disease"]
         symptoms= request.POST["symptoms"]
         prescription = request.POST["prescription"]

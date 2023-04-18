@@ -65,15 +65,10 @@
                     <p class="Visits" style='color: blue;'>Awaiting Visits</p>
                     <p class="Visit_number">{{count}}</p>
                 </div>
-                <div class="c col-md-4 col-sm-8 border">
-                    <img class="i" src="{%static 'health/images/appointment/cancelled.png'%}" alt="" style='float: left;'></img>
-                    <p class="Visits" style='color: red;'>Cancelled Visits</p>
-                    <p class="Visit_number">0</p>
-                </div>
                 <div class="c col-md-3 col-sm-8 border">
                     <img class="i" src="{%static 'health/images/appointment/done.png'%}" alt="" style='float: left;'></img>
                     <p class="Visits" style='color:green;'>Completed Visits</p>
-                    <p class="Visit_number">0</p>
+                    <p class="Visit_number">{{completed}}</p>
                 </div>
             </div>
             <div class="table-responsive">
@@ -110,11 +105,20 @@
                             <td>{{appointment.timeSlot.date}}</td>            
                             <td>{{appointment.timeSlot.starttime}}:00</td>
                             <td>{{appointment.patient.user.Gender}}</td>
-                            <th> <button class="View"><a href="{%url 'home_health_record' %}" class="btn btn-primary"> Create </a></button></th>
+                            <td>
+                                <form method="post" action="{% url 'home_health_record' %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-success" style="font-size: 14;" name="AppID" value="{{appointment.id}}">Create</button>
+                                </form>
+                            
+                            
+                            
+                            </td>
                         </tr>
                         {%endfor%}
                         {%endif%}
-                        {%if user.account.Role == 'Patient'%}
+                        {%if user.account.Role == 'Student'%}
+                        
                             {% for appointment in appointments %}
                         <tr>
 

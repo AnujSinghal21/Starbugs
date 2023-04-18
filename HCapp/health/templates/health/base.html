@@ -120,13 +120,13 @@
                             </a>
                         </li>
                         {% endif %}
-                        {% if user.account.Role == 'Student' or user.account.Role == 'Receptionist'%}
+                        {% if user.account.Role == 'Student' or user.account.Role == 'Student'%}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'health_records'%}">
                                 Health Records
                             </a>
                         </li>
-                        {% elif user.account.Role == 'Student' or user.account.Role == 'Doctor'%}
+                        {% elif user.account.Role == 'Receptionist' or user.account.Role == 'Doctor'%}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'home_health_record'%}">
                                 Heath Records
