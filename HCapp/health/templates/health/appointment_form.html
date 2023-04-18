@@ -139,10 +139,13 @@
         <div class="mt-5 mx-5">
             <h3>Schedule New Appointment</h3>
             
-            <form method="get" action={% url 'submitdate' %} class="row g-3 needs-validation" novalidate>
+            <form method="get" action={% url 'submitdate' %} class="row g-3 needs-validation" id="dateForm" novalidate>
                 <label htmlFor="validationCustom04" class="form-label">Preferred Appointment Date*</label>
                 <div class="row">
-                    <div class="col-md-6"><input name="date" type="date" class="form-control" id="validationCustom04" required></input></div>                    
+                    <div class="col-md-6"><input name="date" type="date" class="form-control" id="appointmentdate" required></input>
+                    <div class="invalid-feedback"> Please enter a future date
+                    </div></div>                    
+        
                     <div class="col-md-3">
                         <button class="btn btn-secondary" style='float: right;' type="submit">Submit Date</button>
                     </div>                    
@@ -299,6 +302,18 @@
                 Array.prototype.slice.call(forms)
                     .forEach(function (form) {
                     form.addEventListener('submit', function (event) {
+                        if (form.id == "dateForm"){
+                            let a_date = new Date (document.getElementById("appointmentdate").value);
+                            let t = new Date();
+                            t.setDate(t.getDate()-1);
+                            if (a_date <= t){
+                                event.preventDefault();
+                                event.stopPropagation();
+                                document.getElementById("appointmentdate").setCustomValidity("Wrong");
+                            }else{
+                                document.getElementById("appointmentdate").setCustomValidity("");
+                            }
+                        }
                         if (!form.checkValidity()) {
                             event.preventDefault();
                             event.stopPropagation();
