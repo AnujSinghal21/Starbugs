@@ -95,7 +95,7 @@
                                 <td > {{r.volume}}</td>
                                 <td ><p>{{r.description}}</p></td>
                                 <td>
-                                    {% if user.account.role == 'Receptionist' %}
+                                    {% if user.account.Role == 'Receptionist' %}
                                     <form method="post" action="{% url 'closeRequest' %}">
                                         {% csrf_token %}
                                         <button type="submit" class="btn btn-success" style="font-size: 14;" name="Reqid" value="{{r.id}}">Close Request</button>

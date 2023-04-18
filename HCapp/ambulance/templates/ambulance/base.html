@@ -16,6 +16,7 @@
         </div>
         {%endif%}
         <div>
+            {% if user.account.Role != 'Ambulance' %}
             <div class="container-sm ml-5 mr-5 mt-5">
                 <h3 style='color:blue; text-align: center;' class="mb-2 mx-4">
                     Book Ambulance
@@ -95,6 +96,7 @@
                     </div>
                 </form>
             </div>
+            {% endif %}
             <div class="mt-4 mx-5">
                 <!-- Ambulance Queue -->
                 <h2 style='text-align: center;'>Ambulance Queue</h2>
