@@ -81,7 +81,11 @@
                     <thead class="table-primary">
                         <tr>
                             <th scope="col">#</th>
+                            {%if user.account.Role == 'Student' %}
                             <th scope="col">Doctor's Name</th>
+                            {%else%}
+                            <th scope="col">Patient's Name</th>
+                            {%endif%}
                             <th scope="col">Date</th>
                             <th scope="col">Visit time</th>
                             {% if user.account.Role == 'Doctor'%}
