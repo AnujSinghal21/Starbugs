@@ -141,16 +141,6 @@
                         </tr>
                             {%endfor%}
                         {%endif%}
-                        <!-- {{appointment.patient.user.Gender}} -->
-                        <!-- <tr>
-                            <th scope="row"></th>
-                            <td style='color: blue;'>Angelina Bishop</td>
-                            <td>3:15pm</td>
-                            <td>Female</td>
-                            <td>21</td>
-                            <td>Cold/Flu</td>
-                            <th> <button class="View">  View Details </button> </th>
-                        </tr> -->
                         </tr> 
                     </tbody>
                 </table>
@@ -351,7 +341,18 @@
                     })
             })();
         </script>
-        
+        <script>
+            window.addEventListener("load", (ev)=>{
+                let u = window.location.href;
+                let d = u.search("date=");
+                if (d != -1){
+                    let dt = u.substr(u.search("date=")+5,11);
+                    let dat = new Date(dt);
+                    let df = dat.getFullYear() + "-" + (dat.getMonth()+1).toString().padStart(2,"0") + "-" + dat.getDate().toString().padStart(2,"0");
+                    document.getElementById('appointmentdate').value = df;
+                }
+            })
+        </script>
         {%else%}
         <h1>You are not authorized to access this page</h1>
         {%endif%}

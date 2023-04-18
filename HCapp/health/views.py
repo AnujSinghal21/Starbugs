@@ -64,18 +64,6 @@ def book_appointment(request):
     assign_roles()
     appointments,count_completed = getappointments(request)
     
-    # submitted = False
-    # if request.method=='POST':
-    #     # form=AppointmentForm(request.POST)
-    #     if form.is_valid():
-    #         form.save()
-    #         messages.success(request,"Your Appointment has been booked")
-    #         return HttpResponseRedirect('/book_appointment?submitted=True')
-    # else:
-    #     form=AppointmentForm()
-    #     if 'submitted' in request.GET:
-    #         submitted=True
-    print(appointments.first().doctor)
     return render(request,'health/appointment_form.html',{'submit':0,"appointments":appointments,"count":appointments.count(),"completed":count_completed})
 
 @login_required
