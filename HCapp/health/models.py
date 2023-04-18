@@ -34,18 +34,20 @@ Available_Slots = (
     ("10PM-11PM","10PM-11PM"),
     ("11PM-12PM","11PM-12PM"),
 )
-Dep1="Department1"
-Dep2="Department2"
-Dep3="Department3"
-Dep4="Department4"
-Dep5="Department5"
+Dep1="ENT Specialist"
+Dep2="Orthologist"
+Dep3="Opthalmologist"
+Dep4="Dentist"
+Dep5="Cardiologist"
 Department_Choices = (
-    (Dep1,"Department1"),
-    (Dep2,"Department2"),
-    (Dep3,"Department3"),
-    (Dep4,"Department4"),
-    (Dep5,"Department5"),
+    (Dep1,"ENT Specialist"),
+    (Dep2,"Orthologist"),
+    (Dep3,"Opthalmologist"),
+    (Dep4,"Dentist"),
+    (Dep5,"Cardiologist"),
+    ("Pathologist","Pathologist"),
 )
+
 
 class Doctor(models.Model):
     user = models.ForeignKey(Account,null=True,on_delete=models.CASCADE)
@@ -56,7 +58,7 @@ class Doctor(models.Model):
         choices=Department_Choices,
     )
     Doctor_Name = models.CharField(max_length=50,null=True)
-    Post= models.CharField(max_length=60,default="Nurse")
+    Post= models.CharField(max_length=60,default="Doctor")
 
     def __str__(self):
         return self.Doctor_Name
