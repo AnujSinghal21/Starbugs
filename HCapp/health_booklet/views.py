@@ -54,7 +54,7 @@ def create_health_record(request):
         username=request.POST["username1"]
         AppID=request.POST["app_id"]
         print(AppID)
-        if(AppID is not ""):
+        if(AppID != ""):
             appointment=Appointment.objects.get(id=AppID)
             appointment.status=False
             user_name=appointment.patient.user.user.username
