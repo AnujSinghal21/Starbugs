@@ -40,7 +40,7 @@ def create_health_record(request):
         #     health_record.doctor = doctor
         #     health_record.save()
         #     return redirect('health_records', patient_id=patient.id)
-        username=request.POST["username"]
+        username=request.POST["username1"]
         disease = request.POST["disease"]
         symptoms= request.POST["symptoms"]
         prescription = request.POST["prescription"]
@@ -60,7 +60,7 @@ def create_health_record(request):
             entry = HealthRecord.objects.create(patient = patient, doctor = doctor, disease = disease,symptoms = symptoms, prescription = prescription, comments = comment)
             entry.save()
        # if not entry.is_valid(): 
-    return render(request, 'create_health_record.html')
+    return render(request, 'create_health_record.html',{'submit':1})
 
 
 @login_required
@@ -68,15 +68,17 @@ def view_health_records(request):
     a = request.user
     account = Account.objects.get(user=a).Role
     if(account=="Doctor" or account=="Receptionist"):
-        username=request.GET["username"]
+        username=request.POST["username"]
+        print(username,"!!!!!!!!!!!!!!!!!!!!!!!")
         user = Account.objects.get(user = User.objects.get(username=username))
+        print(user)
         patient = Patient.objects.get(user = user)
     elif(account=="Student"):
         patient = Patient.objects.get(user=Account.objects.get(user=request.user))
     else:
         return redirect('home')
     
-    health_records = HealthRecord.objects.filter(patient=patient)
+    health_records = HealthRecord.objects.filter(patient=patient).order_by('-datetime')
     for record in health_records:
         record.date = record.datetime.date()
         record.time = record.datetime.time()

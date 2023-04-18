@@ -1,44 +1,294 @@
+
 {% extends 'health/base.html' %}
 {% load static%}
 {%block content%}
+
 <html>
-    <head>
-        <title>Health++</title> 
-        <link rel="icon" href="{%static 'health/images/favicon.ico'%}">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-        <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-        <style>
-            .fade_rule {
-                height: 1px;
-                background-color: #E6E6E6;
-                width: 66.0em;
-                margin: 0 auto;
-                background-image: linear-gradient(left , white 2%, #E6E6E6 50%, white 98%);
-                background-image: -o-linear-gradient(left , white 2%, #E6E6E6 50%, white 98%);
-                background-image: -moz-linear-gradient(left , white 2%, #E6E6E6 50%, white 98%);
-                background-image: -webkit-linear-gradient(left , white 2%, #E6E6E6 50%, white 98%);
-                background-image: -ms-linear-gradient(left , white 2%, #E6E6E6 50%, white 98%);
-                background-image: -webkit-gradient( linear, left bottom, right bottom, color-stop(0.02, white), color-stop(0.5, gray), color-stop(0.98, white) );
-            }
-            .fancy_card:hover {
-                transform: translate3D(0,-1px,0) scale(1.03);
-            }
-            .show{
-                opacity: 1;
-                /* filter: blur(0);
+
+<head>
+    <title>Health++</title>
+    <link rel="icon" href="{%static 'health/images/favicon.ico'%}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .fade_rule {
+            height: 1px;
+            background-color: #E6E6E6;
+            /* width: 66.0em;
+            margin: 0 auto; */
+            background-image: linear-gradient(left, white 2%, #E6E6E6 50%, white 98%);
+            background-image: -o-linear-gradient(left, white 2%, #E6E6E6 50%, white 98%);
+            background-image: -moz-linear-gradient(left, white 2%, #E6E6E6 50%, white 98%);
+            background-image: -webkit-linear-gradient(left, white 2%, #E6E6E6 50%, white 98%);
+            background-image: -ms-linear-gradient(left, white 2%, #E6E6E6 50%, white 98%);
+            background-image: -webkit-gradient(linear, left bottom, right bottom, color-stop(0.02, white), color-stop(0.5, gray), color-stop(0.98, white));
+        }
+
+        .fancy_card{
+            transition: transform 500ms ease;
+        }
+        .fancy_card:hover {
+            transform: translate3D(0, -1px, 0) scale(1.02);
+        }
+
+        .show {
+            opacity: 1;
+            /* filter: blur(0);
                 transform: translateX(0); */
-            }
-            .hidden{
-                opacity: 0;
-                /* filter: blur(5px);
+        }
+
+        .hidden {
+            opacity: 0;
+            /* filter: blur(5px);
                 transform: translateX(-100%); */
-                transition: all 1s;
+            transition: all 1s;
+        }
+
+        /* 
+            .logos{
+                display: flex;
+            }
+            .logo:nth-child(2){
+                transition-delay: 200ms;
+            }
+            .logo:nth-child(3){
+                transition-delay: 400ms;
+            }
+             */
+    </style>
+
+    <style>
+        /* html,
+        body {
+            background: linear-gradient(135deg, rgba(43, 171, 217, 1) 0%, rgba(0, 130, 200, 1) 100%);
+            font-family: "Montserrat", Arial;
+        } */
+
+        .note::after {
+            content: '';
+            width: 20%;
+            height: 2px;
+            border-radius: 999px;
+            background-color: #AFAFAF;
+            background: linear-gradient(135deg, rgba(43, 171, 217, 1) 0%, rgba(0, 130, 200, 1) 100%);
+            position: absolute;
+            top: -1.8em;
+            left: 0;
+        }
+
+        .note {
+            font-size: 0.8em;
+            color: #8A8A8A;
+            position: relative;
+            margin-top: 4em;
+        }
+
+        /* Scroller styling */
+        .scroller {
+            height: 1.2em;
+            line-height: 1.2em;
+            position: relative;
+            overflow: hidden;
+            width: 10em;
+        }
+
+        .scroller>span {
+            position: absolute;
+            top: 0;
+            animation: slide 5s infinite;
+            font-weight: bold;
+
+        }
+
+        @keyframes slide {
+            0% {
+                top: 0;
             }
 
-        </style>
-    </head>
-    <body>
-        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            25% {
+                top: -1.2em;
+            }
+
+            50% {
+                top: -2.4em;
+            }
+
+            75% {
+                top: -3.6em;
+            }
+        }
+    </style>
+
+    <style>
+        .swatch {
+            display: block;
+            text-align: center;
+            position: static;
+            margin: 50px;
+        }
+
+        .swatch div {
+            width: 70px;
+            height: 225px;
+            position: static;
+            top: 0px;
+            border-radius: 5px;
+            border-top: solid 2px rgba(0, 0, 0, 0.2);
+            border-left: solid 3px rgba(255, 255, 255, 0.2);
+            border-bottom: solid 3px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            box-sizing: border-box;
+            transform-origin: center 90%;
+            display: inline-block;
+            backface-visibility: hidden;
+            margin-left: -35px;
+            transform: rotate(0deg);
+        }
+
+        .swatch div:before {
+            width: 16px;
+            height: 16px;
+            content: "";
+            background-color: #FFFFFF;
+            display: inline-block;
+            border-radius: 8px;
+            bottom: 10px;
+            position: absolute;
+            margin-left: -8px;
+        }
+
+        .swatch div:nth-child(1) {
+            background-color: #815A8F;
+            animation: swatch-purple-motion 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        .swatch div:nth-child(2) {
+            background-color: #6730EC;
+            animation: swatch-blue-motion 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        .swatch div:nth-child(3) {
+            background-color: #9ED763;
+            animation: swatch-green-motion 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        .swatch div:nth-child(4) {
+            background-color: #FBD400;
+            animation: swatch-yellow-motion 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        .swatch div:nth-child(5) {
+            background-color: #FF9000;
+            animation: swatch-orange-motion 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        .swatch div:nth-child(6) {
+            background-color: #F73F52;
+            animation: swatch-red-motion 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        @keyframes swatch-purple-motion {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            30%,
+            70% {
+                transform: rotate(-65deg);
+            }
+
+            90%,
+            10% {
+                transform: rotate(0deg);
+            }
+        }
+
+        @keyframes swatch-blue-motion {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            30%,
+            70% {
+                transform: rotate(-40deg);
+            }
+
+            90%,
+            10% {
+                transform: rotate(0deg);
+            }
+        }
+
+        @keyframes swatch-green-motion {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            30%,
+            70% {
+                transform: rotate(-15deg);
+            }
+
+            90%,
+            10% {
+                transform: rotate(0deg);
+            }
+        }
+
+        @keyframes swatch-yellow-motion {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            30%,
+            70% {
+                transform: rotate(15deg);
+            }
+
+            90%,
+            10% {
+                transform: rotate(0deg);
+            }
+        }
+
+        @keyframes swatch-orange-motion {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            30%,
+            70% {
+                transform: rotate(40deg);
+            }
+
+            90%,
+            10% {
+                transform: rotate(0deg);
+            }
+        }
+
+        @keyframes swatch-red-motion {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            30%,
+            70% {
+                transform: rotate(65deg);
+            }
+
+            90%,
+            10% {
+                transform: rotate(0deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
             <div class="carousel-inner" style="height: 70%;">
                 <div class="carousel-item active">
                     <img src="{%static 'health/images/carousel/slider-1.jpg'%}" class="d-block w-100" width="100" height="100%" alt="..."/>
@@ -53,170 +303,181 @@
                     <img src="{%static 'health/images/carousel/slider-4.jpg'%}" class="d-block w-100" width="100" height="100%" alt="..."/>
                 </div>
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
         </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
 
-        <br>
-        <div class="fade_rule"></div>
-        <br>
+    <br>
+    <div class="fade_rule"></div>
+    <br>
 
-        <div class="d-flex justify-content-evenly">
-            <div class="card shadow-lg p-3 mb-5 text-white bg-gradient-to-r from-indigo-400 to-blue-400 mb-3" style="width: 18rem;">
-              <div class="card-body fancy_card">
+
+
+
+    <div class="d-flex justify-content-evenly" style="z-index: 2;">
+        <div class="card shadow-lg p-2 mb-5 text-white bg-gradient-to-r from-blue-500 to-blue-700 mb-3"
+            style="width: 14rem;">
+            <div class="card-body fancy_card">
                 <p class="card-text fs-2">
                 <div class="value fs-2" max_count="768">0</div>
                 Dengue Cases
-                <hr />
+                <hr style="border-width: 4px;" />
                 <strong>Last Day</strong>
                 </p>
-              </div>
             </div>
-        
-            <div class="card shadow-lg p-3 mb-5 text-white bg-gradient-to-r from-indigo-400 to-blue-400 mb-3" style="width: 18rem;">
-              <div class="card-body fancy_card">
+            <img src="{%static 'health/images/image1.png'%}" style="position: absolute; z-index: -11; left: 60px; top: 40px ;">
+        </div>
+
+
+        <div class="card shadow-lg p-2 mb-5 text-white bg-gradient-to-r from-orange-400 to-orange-600 mb-3"
+            style="width: 14rem;">
+            <div class="card-body fancy_card">
                 <p class="card-text fs-2">
                 <div class="value fs-2" max_count="102">0</div>
                 Units Blood Donated
-                <hr />
+                <hr style="border-width: 4px;" />
                 <strong>Blood Donated Since Last Week</strong>
                 </p>
-              </div>
             </div>
-        
-            <div class="card shadow-lg p-3 mb-5 text-white bg-gradient-to-r from-indigo-400 to-blue-400 mb-3" style="width: 18rem;">
-              <div class="card-body fancy_card">
+            <img src="{%static 'health/images/image1.png'%}" style="position: absolute; z-index: -11; left: 60px; top: 40px ;">
+        </div>
+
+        <div class="card shadow-lg p-2 mb-5 text-white bg-gradient-to-r from-blue-500 to-blue-700 mb-3"
+            style="width: 14rem;">
+            <div class="card-body fancy_card">
                 <p class="card-text fs-2">
                 <div class="value fs-2" max_count="43">0</div>
                 Dengue Cases
-                <hr />
+                <hr style="border-width: 4px;" />
                 <strong>Cases Last Week</strong>
                 </p>
-              </div>
             </div>
+            <img src="{%static 'health/images/image1.png'%}" style="position: absolute; z-index: -11; left: 60px; top: 40px ;">
+        </div>
+    </div>
+
+    <br>
+
+    <h2 class="fs-1 d-flex justify-content-center text-5xl"><em style="font-size: 1.1em;">Health++&nbsp;</em> is
+        <!-- Scroller Start -->
+
+        <div class="scroller">
+            <span>
+                &nbsp;&nbsp;Fully-Automated<br />
+                &nbsp;&nbsp;User-Friendly<br />
+                &nbsp;&nbsp;Easily-Accessible<br />
+                &nbsp;&nbsp;Easy-to-Use
+            </span>
         </div>
 
-        <div class="d-flex justify-content-evenly">
-            <div class="card text-black" style='width: 60rem;'>
-                <div class="card-body fancy_card m-3">
-                    <h2 class="card-text fs-2" id="AboutUs">
-                    About Us 
-                    </h2>
-                    <p>
-                    Health++ serves as an all-in-one automated platform for accessing the facilities provided by the 
-                    Health Centre at IIT Kanpur. The Health Centre is dedicated to improving the health and wellbeing 
-                    of the campus community through top-notch prevention, education, and treatment services. 
-                    Their medical, counseling, and health promotion services are designed to help individuals 
-                    maintain good health or recover from illnesses or injuries, thereby minimizing disruptions. 
-                    </p>
-                    <p>
-                    The Health Centre strives to enhance the healthcare experience of the IITK community by providing healthcare services that are respectful, considerate, and confidential. To learn more about available healthcare resources, preventive measures, health education, and general healthcare guidance, please visit the website or speak with Health Centre staff.
-                    Our aim is to offer a user-friendly platform for communication between hardworking Health Centre staff and students. 
-                    </p>
-                    <p>
-                    If you have questions about the functionalities of Health++, or if you encounter any issues, please don't hesitate to reach out to the development team.
-                    </p>
-                </div>
+        </h1>
+        <p class="note"></p>
+    </h2>
+    <div class="d-flex justify-content-center">
+        <div class="card" style="width: 16rem; background: #E97A55;">
+            <img src="{%static 'health/images/doctor.png'%}" alt="">
+        </div>
+        <div class="card" style="width: 16rem; background: #BB6549;">
+            <img src="{%static 'health/images/book.png'%}" alt="" style="margin-top: 27px;" >
+        </div>
+        <div class="card" style="width: 16rem; background: #E97A55;">
+            <img src="{%static 'health/images/blood.png'%}" alt="" style="margin-top: 17px;">
+        </div>
+
+    </div>
+
+    
+
+
+    <br>
+    <br>
+    <div class="d-flex justify-content-evenly">
+        <div class="card text-black" style='width: 60rem;'>
+            <div class="card-body fancy_card">
+                <h2 class="card-text fs-2" id="AboutUs">
+                    About Us
+                </h2>
+                <p>
+                    Health++ serves as an all-in-one automated platform for accessing the facilities provided by the
+                    Health Centre at IIT Kanpur. The Health Centre is dedicated to improving the health and
+                    wellbeing
+                    of the campus community through top-notch prevention, education, and treatment services.
+                    Their medical, counseling, and health promotion services are designed to help individuals
+                    maintain good health or recover from illnesses or injuries, thereby minimizing disruptions.
+                </p>
+                <p>
+                    The Health Centre strives to enhance the healthcare experience of the IITK community by
+                    providing
+                    healthcare services that are respectful, considerate, and confidential. To learn more about
+                    available healthcare resources, preventive measures, health education, and general healthcare
+                    guidance, please visit the website or speak with Health Centre staff.
+                    Our aim is to offer a user-friendly platform for communication between hardworking Health Centre
+                    staff and students.
+                </p>
+                <p>
+                    If you have questions about the functionalities of Health++, or if you encounter any issues,
+                    please
+                    don't hesitate to reach out to the development team.
+                </p>
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-        <script>
-            const counters = document.querySelectorAll('.value');
-            const speed = 100;
-            
-            counters.forEach(counter => {
-              const animate = () => {
+    </div>
+
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+    <script>
+        const counters = document.querySelectorAll('.value');
+        const speed = 250;
+
+        counters.forEach(counter => {
+            const animate = () => {
                 const value = counter.getAttribute('max_count') * 1;
                 const data = counter.innerText * 1;
-            
+
                 // console.log(value, data);
-            
+
                 const time = value / speed;
                 if (data < value) {
-                  counter.innerText = Math.ceil(data + time);
-                  // console.log("updated data:- ", counter.innerText);
-                
-                  setTimeout(animate, 10);
+                    counter.innerText = Math.ceil(data + time);
+                    // console.log("updated data:- ", counter.innerText);
+
+                    setTimeout(animate, 1);
                 } else {
-                  counter.innerText = value;
+                    counter.innerText = value;
                 }
-            
-              }
-            
-              animate();
+
+            }
+
+            animate();
+        });
+
+        const hiddenElements = document.querySelectorAll('.hidden');
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                console.log(entry)
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+                else {
+                    entry.target.classList.remove('show');
+                }
             });
-
-            // const hiddenElements = document.querySelectorAll('.hidden');
-            // const observer = new IntersectionObserver(entries => {
-            //     entries.forEach (entry => {
-            //         console.log(entry)
-            //         if(entry.isIntersecting){
-            //             entry.target.classList.add('show');
-            //         }
-            //         else{
-            //             entry.target.classList.remove('show');
-            //         }
-            //     });
-            // })
-            // hiddenElements.forEach(el => observer.observe(el));
-        </script>
-
-    {% comment %} <h1>You are a {{user.account.Role}}</h1> {% endcomment %}
-<!-- <h1>Hello  22 3!!</h1>
-
- <a href="{% url 'home'%}">
-    Home
-</a><br> 
-{%if user.account.Role == 'Student'%}
-<a href="{% url 'book_appointment'%}">
-    Book Appointment
-</a><br>
-
-{% elif user.account.Role == 'Doctor'%}
-<a href="{% url 'book_appointment'%}">
-  Show Appointments
-</a><br>
-{%endif%} -->
-<!-- {%if user.is_authenticated %}
-
-<a>
-  Hello!! {{user.username}}<br>
-
- 
-</a><br>
-
-<a href = "{% url 'logoutUser' %}">
-  Logout 
-</a><br>
-{%else%}
-
-<a href = "{% url 'loginUser' %}">
-  Login
-</a><br>
-
-<a href = "{% url 'registerUser' %}">
-  Register
-</a><br>
-
-
-{%endif%} -->
-<!-- <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <link rel="icon" href="favicon.ico">
-    <title>Health++</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script src="./../src/index.js" type="text/JSX"></script>
-  </body>
-</html> -->
+        })
+        hiddenElements.forEach(el => observer.observe(el));
+    </script>
 </body>
+
 </html>
 {%endblock%}
